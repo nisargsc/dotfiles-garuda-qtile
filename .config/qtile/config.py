@@ -25,6 +25,7 @@
 # SOFTWARE.
 
 
+import json
 import os
 import re
 import socket
@@ -43,6 +44,42 @@ mod = "mod4"
 mod1 = "alt"
 mod2 = "control"
 home = os.path.expanduser('~')
+
+
+#colors
+white="#ffffff"
+black="#000000"
+#font_color=white
+#font_color2="#f4c2c2"
+#bg_color="#2F343F"
+#shadow_color="#4c566a"
+
+#primary_color="#e75480"
+primary_color="#2aa899"
+#primary_color="#abb2bf"
+#primary_color="#81a1c1"
+#primary_color="#56b6c2"
+#primary_color="#b48ead"
+#primary_color="#e06c75"
+#primary_color="#fb9f7f"
+#primary_color="#ffd47e"
+
+#secondary_color="#b48ead"
+
+bg_color="#343d46"
+shadow_color="#5d646b"
+#font_color="#d8dee9"
+font_color=white
+primary_color="#5fb3b3"
+secondary_color="#f07f85"
+
+#with open(home+'/.cache/wal/colors.json', 'r') as f:
+#    colors_json = json.load(f)
+#
+#    font_color=colors_json["special"]["cursor"]
+#    bg_color=colors_json["special"]["background"]
+#    primary_color=colors_json["colors"]["color1"]
+#    secondary_color=colors_json["colors"]["color2"]
 
 def move_mouse_to_current_window():
     home = os.path.expanduser('~')
@@ -349,10 +386,10 @@ for i in groups:
 
 
 def init_layout_theme():
-    return {"margin":10,
+    return {"margin":8,
             "border_width":2,
-            "border_focus": "#81a1c1",
-            "border_normal": "#2F343F"
+            "border_focus": primary_color,
+            "border_normal": bg_color
             }
 
 layout_theme = init_layout_theme()
@@ -370,10 +407,10 @@ layouts = [
     layout.Stack(**layout_theme),
     layout.Tile(**layout_theme),
     layout.TreeTab(
-        sections=['FIRST', 'SECOND'],
-        bg_color = '#141414',
-        active_bg = '#0000ff',
-        inactive_bg = '#1e90ff',
+        sections=['1', '2', '3'],
+        bg_color = bg_color,
+        active_bg = primary_color,
+        inactive_bg = shadow_color,
         padding_y =5,
         section_top =10,
         panel_width = 280),
@@ -425,7 +462,7 @@ def init_widgets_defaults():
     return dict(font="Noto Sans",
                 fontsize = 9,
                 padding = 2,
-                background=colors[1])
+                background=bg_color)
 
 widget_defaults = init_widgets_defaults()
 
@@ -433,13 +470,13 @@ def init_widgets_list():
     prompt = "{0}@{1}: ".format(os.environ["USER"], socket.gethostname())
     widgets_list = [
             widget.Sep(
-                background= colors[1],
-                foreground= colors[1],
+                background= bg_color,
+                foreground= bg_color,
                 ),
 
                widget.GroupBox(
-                    foreground= colors[4],
-                    background= colors[1],
+                    foreground= font_color,
+                    background= bg_color,
                     font='UbuntuMono Nerd Font',
                     fontsize = 15,
                     margin_y = 3,
@@ -447,17 +484,17 @@ def init_widgets_list():
                     padding_y = 5,
                     padding_x = 4,
                     borderwidth = 3,
-                    active=colors[18],
-                    inactive=colors[5],
+                    active=primary_color,
+                    inactive=font_color,
                     rounded= True,
                     highlight_method='line',
-                    highlight_color=colors[12],
+                    highlight_color=shadow_color,
                     urgent_alert_method='line',
-                    urgent_border=colors[20],
-                    this_current_screen_border=colors[18],
-                    this_screen_border=colors[18],
-                    other_current_screen_border=colors[5],
-                    other_screen_border=colors[5],
+                    urgent_border=secondary_color,
+                    this_current_screen_border=primary_color,
+                    this_screen_border=primary_color,
+                    other_current_screen_border=font_color,
+                    other_screen_border=font_color,
                     disable_drag=True,
                     #hide_unused=True,
                     #visible_groups=['1','2','9','0'],
@@ -466,18 +503,25 @@ def init_widgets_list():
 
                widget.CurrentLayoutIcon(
                        custom_icon_paths = [os.path.expanduser("~/.config/qtile/icons")],
-                       foreground = colors[5],
-                       background = colors[18],
+                       foreground = font_color,
+                       background = primary_color,
                        padding = 0,
                        scale = 0.7,
                        ),
+
                widget.CurrentLayout(
-                      font = "Noto Sans Bold",
-                      fontsize = 12,
-                      foreground = colors[5],
-                      background = colors[18],
-                        **powerline,
-                        ),
+                    font = "Noto Sans Bold",
+                    fontsize = 12,
+                    foreground = font_color,
+                    background = primary_color,
+                    **powerline,
+                ),
+
+                widget.Sep(
+                    background= bg_color,
+                    foreground= bg_color,
+                    **powerline,
+                ),
 
                 widget.TaskList(
                     highlight_method = 'block', # or block
@@ -490,13 +534,13 @@ def init_widgets_list():
                     margin_x=3,
                     margin_y=3,
                     fontsize=14,
-                    border=colors[18],
+                    border=primary_color,
                     margin=2,
                     txt_floating='🗗',
                     txt_minimized='>_ ',
                     borderwidth = 1,
-                    background=colors[1],
-                    foreground=colors[5],
+                    background=bg_color,
+                    foreground=font_color,
                     **powerline,
                     #unfocused_border = 'border'
                 ),
@@ -521,8 +565,8 @@ def init_widgets_list():
                         #format = '{MemUsed}M/{MemTotal}M',
                         update_interval = 1,
                         fontsize = 12,
-                        foreground = colors[5],
-                        background = colors[18],
+                        foreground = font_color,
+                        background = primary_color,
                         mouse_callbacks = {'Button1': lambda : qtile.cmd_spawn(myTerm + ' -e htop')},
                         **powerline,
                        ),
@@ -533,32 +577,34 @@ def init_widgets_list():
                         update_interval = 1,
                         fontsize = 12,
                         measure_mem = 'G',
-                        foreground = colors[5],
-                        background = colors[1],
+                        foreground = font_color,
+                        background = bg_color,
                         mouse_callbacks = {'Button1': lambda : qtile.cmd_spawn(myTerm + ' -e htop')},
                         **powerline,
                        ),
 
                widget.Clock(
                         font="Noto Sans Bold",
-                        foreground = colors[5],
-                        background = colors[18],
+                        foreground = font_color,
+                        background = primary_color,
                         fontsize = 12,
                         format="%A %d/%m/%Y %I:%M %p",
                         **powerline,
                         ),
 
                widget.Battery(
-                      font = "Noto Sans Bold",
-                      fontsize = 12,
-                      background = colors[1],
-                        ),
+                    font = "Noto Sans Bold",
+                    fontsize = 12,
+                    foreground = font_color,
+                    background = bg_color,
+                ),
 
                widget.Systray(
-                       background=colors[1],
-                       icon_size=20,
-                       padding = 4,
-                       ),
+                    foreground = font_color,
+                    background= bg_color,
+                    icon_size=20,
+                    padding = 4,
+                ),
               ]
     return widgets_list
 
