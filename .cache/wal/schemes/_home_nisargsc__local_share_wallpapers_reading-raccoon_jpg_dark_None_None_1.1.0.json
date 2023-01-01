@@ -1,0 +1,27 @@
+{
+    "wallpaper": "/home/nisargsc/.local/share/wallpapers/reading-raccoon.jpg",
+    "alpha": "100",
+    "special": {
+        "background": "#0d0c09",
+        "foreground": "#ddeef5",
+        "cursor": "#ddeef5"
+    },
+    "colors": {
+        "color0": "#0d0c09",
+        "color1": "#95681E",
+        "color2": "#AA6B4C",
+        "color3": "#BBA03A",
+        "color4": "#58A8A8",
+        "color5": "#C8B59C",
+        "color6": "#B7E7FB",
+        "color7": "#ddeef5",
+        "color8": "#9aa6ab",
+        "color9": "#95681E",
+        "color10": "#AA6B4C",
+        "color11": "#BBA03A",
+        "color12": "#58A8A8",
+        "color13": "#C8B59C",
+        "color14": "#B7E7FB",
+        "color15": "#ddeef5"
+    }
+}

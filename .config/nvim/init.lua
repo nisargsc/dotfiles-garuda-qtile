@@ -48,6 +48,7 @@ require('packer').startup(function(use)
   use 'tpope/vim-rhubarb'
   use 'lewis6991/gitsigns.nvim'
 
+  use 'dylanaraps/wal.vim' -- Theme from pywal
   use 'navarasu/onedark.nvim' -- Theme inspired by Atom
   use 'xiyaowong/nvim-transparent' -- To toggle transparent
   use 'nvim-lualine/lualine.nvim' -- Fancier statusline
@@ -161,7 +162,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 require('lualine').setup {
   options = {
     icons_enabled = false,
-    theme = 'onedark',
+    theme = 'auto',
     component_separators = '|',
     section_separators = '',
   },

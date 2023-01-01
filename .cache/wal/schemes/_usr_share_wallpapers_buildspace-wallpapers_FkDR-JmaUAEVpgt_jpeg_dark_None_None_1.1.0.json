@@ -1,0 +1,27 @@
+{
+    "wallpaper": "/usr/share/wallpapers/buildspace-wallpapers/FkDR-JmaUAEVpgt.jpeg",
+    "alpha": "100",
+    "special": {
+        "background": "#0e090f",
+        "foreground": "#89c3c9",
+        "cursor": "#89c3c9"
+    },
+    "colors": {
+        "color0": "#0e090f",
+        "color1": "#C33C23",
+        "color2": "#F55E1F",
+        "color3": "#FB985D",
+        "color4": "#FAA241",
+        "color5": "#2A688B",
+        "color6": "#987882",
+        "color7": "#89c3c9",
+        "color8": "#5f888c",
+        "color9": "#C33C23",
+        "color10": "#F55E1F",
+        "color11": "#FB985D",
+        "color12": "#FAA241",
+        "color13": "#2A688B",
+        "color14": "#987882",
+        "color15": "#89c3c9"
+    }
+}

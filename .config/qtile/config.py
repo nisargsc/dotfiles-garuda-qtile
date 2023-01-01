@@ -38,6 +38,7 @@ from qtile_extras import widget
 from qtile_extras.widget.decorations import PowerLineDecoration
 
 from libqtile.widget import Spacer
+import theme
 
 #mod4 or mod = super key
 mod = "mod4"
@@ -47,6 +48,7 @@ home = os.path.expanduser('~')
 
 
 #colors
+primary_color=theme.primary_color
 white="#ffffff"
 black="#000000"
 #font_color=white
@@ -55,7 +57,7 @@ black="#000000"
 #shadow_color="#4c566a"
 
 #primary_color="#e75480"
-primary_color="#2aa899"
+#primary_color="#2aa899"
 #primary_color="#abb2bf"
 #primary_color="#81a1c1"
 #primary_color="#56b6c2"
@@ -63,14 +65,16 @@ primary_color="#2aa899"
 #primary_color="#e06c75"
 #primary_color="#fb9f7f"
 #primary_color="#ffd47e"
+#primary_color="#1EA3AA"
 
 #secondary_color="#b48ead"
 
+bg_transparent='#1b2b3400'
 bg_color="#343d46"
 shadow_color="#5d646b"
 #font_color="#d8dee9"
 font_color=white
-primary_color="#5fb3b3"
+#primary_color="#5fb3b3"
 secondary_color="#f07f85"
 
 #with open(home+'/.cache/wal/colors.json', 'r') as f:
@@ -80,6 +84,11 @@ secondary_color="#f07f85"
 #    bg_color=colors_json["special"]["background"]
 #    primary_color=colors_json["colors"]["color1"]
 #    secondary_color=colors_json["colors"]["color2"]
+
+@lazy.function
+def primary_colorpicker(qtile):
+    home = os.path.expanduser('~')
+    subprocess.call([home + '/.config/qtile/scripts/primary_colorpicker.sh'])
 
 def move_mouse_to_current_window():
     home = os.path.expanduser('~')
@@ -114,6 +123,7 @@ keys = [
     Key([mod], "t", lazy.spawn('xterm')),
     Key([mod], "v", lazy.spawn('pavucontrol')),
     Key([mod], "d", lazy.spawn('rofi -show drun')),
+    Key([mod], "b", lazy.spawn('brave --profile-directory=Default')),
     Key([mod], "Escape", lazy.spawn('xkill')),
     Key([mod], "Return", lazy.spawn(myTerm)),
     Key([mod], "KP_Enter", lazy.spawn('alacritty')),
@@ -132,9 +142,15 @@ keys = [
     Key([mod, "shift"], "d", lazy.spawn('nwggrid -p -o 0.4')),
     Key([mod, "shift"], "q", lazy.window.kill()),
     Key([mod, "shift"], "r", lazy.restart()),
-    Key([mod, "control"], "r", lazy.reload_config()),
     Key([mod, "shift"], "x", lazy.shutdown()),
 
+# SUPER + CONTROL KEYS
+    Key([mod, "control"], "r", lazy.reload_config(), desc="reload qutile config"),
+    Key([mod, "control"], "t", 
+        primary_colorpicker(),
+        lazy.reload_config(),
+        desc="Colorpicker for primary_color"
+    ),
 # CONTROL + ALT KEYS
 
     Key(["mod1", "control"], "o", lazy.spawn(home + '/.config/qtile/scripts/picom-toggle.sh')),
@@ -313,24 +329,25 @@ group_names = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0",]
 # FOR AZERTY KEYBOARDS
 #group_names = ["ampersand", "eacute", "quotedbl", "apostrophe", "parenleft", "section", "egrave", "exclam", "ccedilla", "agrave",]
 
-# group_labels = ["1 ", "2 ", "3 ", "4 ", "5 ", "6 ", "7 ", "8 ", "9 ", "0",]
-group_labels = [
-        "Term", #1
-        "Term", #2
-        "3", #3
-        "4", #4
-        "5", #5
-        "6", #6
-        "7", #7
-        "8", #8
-        "Web", #9
-        "Code", #0
-]
+#group_labels = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0",]
+group_labels = ["" for i in range(len(group_names))]
+#group_labels = [
+#        "Term", #1
+#        "Term", #2
+#        "3", #3
+#        "4", #4
+#        "5", #5
+#        "6", #6
+#        "7", #7
+#        "Media", #8
+#        "Web", #9
+#        "Code", #0
+#]
 #group_labels = ["α", "β", "γ", "δ", "ε", "ζ", "η", "θ", "ι", "κa,]
 #group_labels = ["", "", "", "", "","",]
 #group_labels = ["Web", "Edit/chat", "Image", "Gimp", "Meld", "Video", "Vb", "Files", "Mail", "Music",]
 
-group_layouts = ["monadtall", "monadtall", "monadtall", "monadtall", "monadtall", "monadtall", "max", "max", "max", "max",]
+group_layouts = ["monadtall", "monadtall", "monadtall", "monadtall", "matrix", "matrix", "max", "max", "max", "max",]
 #group_layouts = ["monadtall", "matrix", "monadtall", "bsp", "monadtall", "matrix", "monadtall", "bsp", "monadtall", "monadtall",]
 
 for i in range(len(group_names)):
@@ -339,26 +356,6 @@ for i in range(len(group_names)):
         layout=group_layouts[i].lower(),
         label=group_labels[i],
     )
-    if(group_labels[i]=="Code"):
-        group = Group(
-            name=group_names[i],
-            layout="max",
-            label=group_labels[i],
-            matches=[
-                Match(wm_class='code-oss')
-            ]
-        )
-
-    if(group_labels[i]=="Web"):
-        group = Group(
-            name=group_names[i],
-            layout="max",
-            label=group_labels[i],
-            matches=[
-                Match(title='Brave'),
-                Match(wm_class='Brave-browser')
-            ]
-        )
 
     groups.append(group)
 
@@ -386,11 +383,12 @@ for i in groups:
 
 
 def init_layout_theme():
-    return {"margin":8,
+    return {
+            "margin":7,
             "border_width":2,
             "border_focus": primary_color,
             "border_normal": bg_color
-            }
+        }
 
 layout_theme = init_layout_theme()
 
@@ -406,16 +404,17 @@ layouts = [
     layout.Columns(**layout_theme),
     layout.Stack(**layout_theme),
     layout.Tile(**layout_theme),
-    layout.TreeTab(
-        sections=['1', '2', '3'],
-        bg_color = bg_color,
-        active_bg = primary_color,
-        inactive_bg = shadow_color,
-        padding_y =5,
-        section_top =10,
-        panel_width = 280),
     layout.VerticalTile(**layout_theme),
     layout.Zoomy(**layout_theme)
+    #layout.TreeTab(
+    #    sections=['1', '2', '3'],
+    #    bg_color = bg_color,
+    #    active_bg = primary_color,
+    #    inactive_bg = shadow_color,
+    #    padding_y =5,
+    #    section_top =10,
+    #    panel_width = 280,
+    #),
 ]
 
 # COLORS FOR THE BAR
@@ -449,62 +448,51 @@ def init_colors():
 
 colors = init_colors()
 
-powerline = {
+powerlineRightRound = {
     "decorations": [
-        PowerLineDecoration(path="forward_slash")
+        PowerLineDecoration(path="rounded_right")
     ]
 }
+
+powerlineLeftRound = {
+    "decorations": [
+        PowerLineDecoration(path="rounded_left")
+    ]
+}
+
+#powerline = {
+#    "decorations": [
+#        PowerLineDecoration(path="forward_slash")
+#    ]
+#}
 
 
 # WIDGETS FOR THE BAR
 
 def init_widgets_defaults():
-    return dict(font="Noto Sans",
+    return dict(
+                font="Noto Sans",
                 fontsize = 9,
                 padding = 2,
-                background=bg_color)
+            )
 
 widget_defaults = init_widgets_defaults()
+sapration = 20
 
 def init_widgets_list():
     prompt = "{0}@{1}: ".format(os.environ["USER"], socket.gethostname())
     widgets_list = [
-            widget.Sep(
-                background= bg_color,
-                foreground= bg_color,
-                ),
 
-               widget.GroupBox(
-                    foreground= font_color,
-                    background= bg_color,
-                    font='UbuntuMono Nerd Font',
-                    fontsize = 15,
-                    margin_y = 3,
-                    margin_x = 2,
-                    padding_y = 5,
-                    padding_x = 4,
-                    borderwidth = 3,
-                    active=primary_color,
-                    inactive=font_color,
-                    rounded= True,
-                    highlight_method='line',
-                    highlight_color=shadow_color,
-                    urgent_alert_method='line',
-                    urgent_border=secondary_color,
-                    this_current_screen_border=primary_color,
-                    this_screen_border=primary_color,
-                    other_current_screen_border=font_color,
-                    other_screen_border=font_color,
-                    disable_drag=True,
-                    #hide_unused=True,
-                    #visible_groups=['1','2','9','0'],
-                    **powerline,
+                widget.Spacer(
+                    #background=shadow_color,
+                    length=sapration,
+                    **powerlineRightRound,
                 ),
 
                widget.CurrentLayoutIcon(
                        custom_icon_paths = [os.path.expanduser("~/.config/qtile/icons")],
+                       background = bg_color,
                        foreground = font_color,
-                       background = primary_color,
                        padding = 0,
                        scale = 0.7,
                        ),
@@ -512,120 +500,207 @@ def init_widgets_list():
                widget.CurrentLayout(
                     font = "Noto Sans Bold",
                     fontsize = 12,
+                    background = bg_color,
                     foreground = font_color,
-                    background = primary_color,
-                    **powerline,
+                    #**powerline,
+                    **powerlineLeftRound,
+                ),
+                widget.Spacer(
+                    #background=shadow_color,
+                    length=5,
+                    **powerlineRightRound,
+                ),
+                widget.TaskList(
+                    font = "Noto Sans",
+                    highlight_method = 'block', # or block
+                    max_title_width=150,
+                    spacing=5,
+                    rounded=True,
+                    padding=3,
+                    margin=2,
+                    fontsize=14,
+                    border=primary_color,
+                    unfocused_border=bg_color,
+                    txt_floating='🗗',
+                    txt_minimized='>_ ',
+                    borderwidth = 1,
+                    foreground=font_color,
+                    **powerlineLeftRound,
+                    #**powerline,
+                    #unfocused_border = 'border'
+                ),
+
+                widget.Spacer(
+                    #background=shadow_color,
+                    length=5,
+                    **powerlineRightRound,
+                ),
+               widget.GroupBox(
+                    background= bg_transparent,
+                    foreground= font_color,
+                    font='UbuntuMono Nerd Font',
+                    fontsize = 23,
+                    center_aligned = True,
+                    margin_y = 3,
+                    margin_x = 2,
+                    padding_y = 5,
+                    padding_x = 4,
+                    borderwidth = 3,
+                    active=font_color,
+                    inactive=bg_color,
+                    rounded= True,
+                    highlight_method='block',
+                    highlight_color=bg_color,
+                    urgent_alert_method='line',
+                    urgent_border=secondary_color,
+                    this_current_screen_border=primary_color,
+                    this_screen_border=primary_color,
+                    other_current_screen_border=shadow_color,
+                    other_screen_border=shadow_color,
+                    disable_drag=True,
+                    #hide_unused=True,
+                    #visible_groups=['1','2','9','0'],
+                    #**powerline,
+                    **powerlineLeftRound,
+                ),
+                widget.Spacer(
+                    #background=shadow_color,
+                    length=sapration,
+                    **powerlineRightRound,
+                ),
+
+                widget.CPU(
+                        font="Noto Sans Bold",
+                        #format = '{MemUsed}M/{MemTotal}M',
+                        update_interval = 1,
+                        fontsize = 12,
+                        background = bg_color,
+                        foreground = font_color,
+                        mouse_callbacks = {'Button1': lambda : qtile.cmd_spawn(myTerm + ' -e htop')},
+                        #**powerline,
+                       ),
+
+                widget.Spacer(
+                    background=bg_color,
+                    length=5,
                 ),
 
                 widget.Sep(
                     background= bg_color,
-                    foreground= bg_color,
-                    **powerline,
+                    foreground= font_color,
+                    linewidth=2,
+                #    **powerline,
                 ),
-
-                widget.TaskList(
-                    highlight_method = 'block', # or block
-                    icon_size=17,
-                    max_title_width=150,
-                    spacing=1,
-                    rounded=True,
-                    padding_x=1,
-                    padding_y=0,
-                    margin_x=3,
-                    margin_y=3,
-                    fontsize=14,
-                    border=primary_color,
-                    margin=2,
-                    txt_floating='🗗',
-                    txt_minimized='>_ ',
-                    borderwidth = 1,
-                    background=bg_color,
-                    foreground=font_color,
-                    **powerline,
-                    #unfocused_border = 'border'
-                ),
-
-
-
-
-                #widget.Net(
-                #         font="Noto Sans",
-                #         fontsize=12,
-                #       # Here enter your network name
-                #         interface=["enp7s0", "wlp0s20f3"],
-                #         format = '{down} ↓↑ {up}',
-                #         foreground=colors[5],
-                #         background=colors[19],
-                #         padding = 0,
-                #        **powerline,
-                #         ),
-
-                widget.CPU(
-                        font="Noto Sans",
-                        #format = '{MemUsed}M/{MemTotal}M',
-                        update_interval = 1,
-                        fontsize = 12,
-                        foreground = font_color,
-                        background = primary_color,
-                        mouse_callbacks = {'Button1': lambda : qtile.cmd_spawn(myTerm + ' -e htop')},
-                        **powerline,
-                       ),
 
                widget.Memory(
-                        font="Noto Sans",
+                        font="Noto Sans Bold",
                         format = '{MemUsed: .2f} {mm} /{MemTotal: .2f} {mm}',
                         update_interval = 1,
                         fontsize = 12,
                         measure_mem = 'G',
-                        foreground = font_color,
                         background = bg_color,
+                        foreground = font_color,
                         mouse_callbacks = {'Button1': lambda : qtile.cmd_spawn(myTerm + ' -e htop')},
-                        **powerline,
+                        **powerlineLeftRound,
+                        #**powerline,
                        ),
 
-               widget.Clock(
-                        font="Noto Sans Bold",
-                        foreground = font_color,
-                        background = primary_color,
-                        fontsize = 12,
-                        format="%A %d/%m/%Y %I:%M %p",
-                        **powerline,
-                        ),
+               #widget.Pomodoro(
+               #         font="Noto Sans",
+               #         fontsize = 12,
+               #         foreground = font_color,
+               #         background = bg_color,
+               #         **powerline,
+               #        ),
+               #widget.Clipboard(
+               #         font="Noto Sans",
+               #         fontsize = 12,
+               #         foreground = font_color,
+               #         background = bg_color,
+               #         **powerline,
+               # ),
 
-               widget.Battery(
+                widget.Spacer(
+                    #background=shadow_color,
+                    length=sapration,
+                    **powerlineRightRound,
+                ),
+
+               widget.Clock(
+                    font="Noto Sans Bold",
+                    background = bg_color,
+                    foreground = font_color,
+                    fontsize = 12,
+                    format="%A %d/%m/%Y %I:%M %p",
+                    **powerlineLeftRound,
+                    #**powerline,
+                ),
+
+                widget.Spacer(
+                    #background=shadow_color,
+                    length=sapration,
+                    **powerlineRightRound,
+                ),
+                widget.UPowerWidget(
                     font = "Noto Sans Bold",
                     fontsize = 12,
-                    foreground = font_color,
                     background = bg_color,
-                ),
+                    foreground = font_color,
+                    text_displaytime = 3,
+                    **powerlineLeftRound,
+                    ),
+               #widget.Battery(
+               #     font = "Noto Sans Bold",
+               #     fontsize = 12,
+               #     background = bg_color,
+               #     foreground = font_color,
+               #     **powerlineLeftRound,
+               #     ),
+
+               widget.Spacer(
+                       #background=shadow_color,
+                       length=sapration,
+                       **powerlineRightRound,
+                       ),
 
                widget.Systray(
-                    foreground = font_color,
-                    background= bg_color,
-                    icon_size=20,
-                    padding = 4,
-                ),
+                       padding = 2,
+                       **powerlineLeftRound,
+                       #**powerline,
+                       ),
+
+               widget.Spacer(
+                       #background=shadow_color,
+                       length=sapration,
+                       ),
               ]
     return widgets_list
 
-widgets_list = init_widgets_list()
-
-
-def init_widgets_screen1():
-    widgets_screen1 = init_widgets_list()
-    return widgets_screen1
-
-def init_widgets_screen2():
-    widgets_screen2 = init_widgets_list()[:-1]
-    return widgets_screen2
-
-widgets_screen1 = init_widgets_screen1()
-widgets_screen2 = init_widgets_screen2()
-
 
 def init_screens():
-    return [Screen(top=bar.Bar(widgets=init_widgets_screen1(), size=23, margin=1, opacity=0.85, background= "000000")),
-            Screen(top=bar.Bar(widgets=init_widgets_screen2(), size=23, margin=1, opacity=0.85, background= "000000"))]
+    return [Screen(
+                top=bar.Bar(
+                    widgets=init_widgets_list(), 
+                    size=30,
+                    margin=[10,20,0,20],
+                    opacity=1,
+                    background= bg_transparent,
+                #    border_color = shadow_color,
+                #   border_width = 2,
+                ),
+            ),
+            Screen(
+                top=bar.Bar(
+                    widgets=init_widgets_list()[:-2],
+                    size=30,
+                    margin=[10,20,0,20],
+                    opacity=1,
+                    background= bg_transparent,
+                    #border_color = shadow_color,
+                    #border_width = 2,
+                )
+            )
+            ]
 screens = init_screens()
 
 
@@ -640,47 +715,62 @@ mouse = [
 dgroups_key_binder = None
 dgroups_app_rules = []
 
-# ASSIGN APPLICATIONS TO A SPECIFIC GROUPNAME
-# BEGIN
+# send the window to a perticular group
+@hook.subscribe.client_new
+def send_to_group(window):
+    wm_class = window.window.get_wm_class()[0]
 
-#########################################################
-################ assgin apps to groups ##################
-#########################################################
-# @hook.subscribe.client_new
-# def assign_app_group(client):
-#     d = {}
-#     #########################################################
-#     ################ assgin apps to groups ##################
-#     #########################################################
-#     d["1"] = ["Navigator", "Firefox", "Vivaldi-stable", "Vivaldi-snapshot", "Chromium", "Google-chrome", "Brave", "Brave-browser",
-#               "navigator", "firefox", "vivaldi-stable", "vivaldi-snapshot", "chromium", "google-chrome", "brave", "brave-browser", ]
-#     d["2"] = [ "Atom", "Subl3", "Geany", "Brackets", "Code-oss", "Code", "TelegramDesktop", "Discord",
-#                "atom", "subl3", "geany", "brackets", "code-oss", "code", "telegramDesktop", "discord", ]
-#     d["3"] = ["Inkscape", "Nomacs", "Ristretto", "Nitrogen", "Feh",
-#               "inkscape", "nomacs", "ristretto", "nitrogen", "feh", ]
-#     d["4"] = ["Gimp", "gimp" ]
-#     d["5"] = ["Meld", "meld", "org.gnome.meld" "org.gnome.Meld" ]
-#     d["6"] = ["Vlc","vlc", "Mpv", "mpv" ]
-#     d["7"] = ["VirtualBox Manager", "VirtualBox Machine", "Vmplayer",
-#               "virtualbox manager", "virtualbox machine", "vmplayer", ]
-#     d["8"] = ["pcmanfm", "Nemo", "Caja", "Nautilus", "org.gnome.Nautilus", "Pcmanfm", "Pcmanfm-qt",
-#               "pcmanfm", "nemo", "caja", "nautilus", "org.gnome.nautilus", "pcmanfm", "pcmanfm-qt", ]
-#     d["9"] = ["Evolution", "Geary", "Mail", "Thunderbird",
-#               "evolution", "geary", "mail", "thunderbird" ]
-#     d["0"] = ["Spotify", "Pragha", "Clementine", "Deadbeef", "Audacious",
-#               "spotify", "pragha", "clementine", "deadbeef", "audacious" ]
-#     ##########################################################
-#     wm_class = client.window.get_wm_class()[0]
-#
-#     for i in range(len(d)):
-#         if wm_class in list(d.values())[i]:
-#             group = list(d.keys())[i]
-#             client.togroup(group)
-#             client.group.cmd_toscreen()
+    # Assign window with wm_class to groups
+    grp = {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": [],
+        "6": [],
+        "7": [
+            "obs", "nitrogen",
+            ],
+        "8": [
+            "vlc", "spotify", "Spotify",
+            ],
+        "9": [
+            "brave", "brave-browser", "Brave", "Brave-browser",
+            ],
+        "0": [
+            "code-oss", "code", "Code-oss", "Code",
+            ],
+    } 
 
-# END
-# ASSIGN APPLICATIONS TO A SPECIFIC GROUPNAME
+    for grp_name in grp:
+        if (wm_class in grp[grp_name]):
+            window.togroup(grp_name, switch_group=True)
 
+# Send to group fix
+# Spotify doesn't move to the group useing `client_new` hook
+@hook.subscribe.client_managed
+def send_to_group_fix(window):
+    wm_class = window.window.get_wm_class()[0]
+
+    # Assign window with wm_class to groups
+    grp = {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": [],
+        "6": [],
+        "7": [],
+        "8": [
+            "spotify", "Spotify",
+            ],
+        "9": [],
+        "0": [],
+    } 
+
+    for grp_name in grp:
+        if (wm_class in grp[grp_name]):
+            window.togroup(grp_name, switch_group=True)
 
 
 main = None

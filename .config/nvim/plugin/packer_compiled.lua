@@ -208,6 +208,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/nisargsc/.local/share/nvim/site/pack/packer/start/vim-sleuth",
     url = "https://github.com/tpope/vim-sleuth"
+  },
+  ["wal.vim"] = {
+    loaded = true,
+    path = "/home/nisargsc/.local/share/nvim/site/pack/packer/start/wal.vim",
+    url = "https://github.com/dylanaraps/wal.vim"
   }
 }
 

@@ -26,7 +26,9 @@ run volumeicon &
 #run discord &
 #nitrogen --random --set-zoom-fill &
 $HOME/.screenlayout/external-above.sh &
-nitrogen --restore &
+#nitrogen --restore &
+wal -Rq &
+run /usr/lib/kdeconnectd &
 #run caffeine -a &
 #run vivaldi-stable &
 #run firefox &

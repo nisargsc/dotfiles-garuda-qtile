@@ -1,0 +1,27 @@
+{
+    "wallpaper": "/usr/share/wallpapers/buildspace-wallpapers/FkDRbP5akAABOnX.jpeg",
+    "alpha": "100",
+    "special": {
+        "background": "#0D0E17",
+        "foreground": "#e6dfa8",
+        "cursor": "#e6dfa8"
+    },
+    "colors": {
+        "color0": "#0D0E17",
+        "color1": "#B26538",
+        "color2": "#4CA523",
+        "color3": "#AB983E",
+        "color4": "#E9A215",
+        "color5": "#E5CC21",
+        "color6": "#E8A85A",
+        "color7": "#e6dfa8",
+        "color8": "#a19c75",
+        "color9": "#B26538",
+        "color10": "#4CA523",
+        "color11": "#AB983E",
+        "color12": "#E9A215",
+        "color13": "#E5CC21",
+        "color14": "#E8A85A",
+        "color15": "#e6dfa8"
+    }
+}

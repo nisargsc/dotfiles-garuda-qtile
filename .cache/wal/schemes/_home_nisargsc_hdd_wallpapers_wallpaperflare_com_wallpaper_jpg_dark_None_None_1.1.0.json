@@ -1,0 +1,27 @@
+{
+    "wallpaper": "/home/nisargsc/hdd/wallpapers/wallpaperflare.com_wallpaper.jpg",
+    "alpha": "100",
+    "special": {
+        "background": "#0d0c09",
+        "foreground": "#ddeef5",
+        "cursor": "#ddeef5"
+    },
+    "colors": {
+        "color0": "#0d0c09",
+        "color1": "#95681E",
+        "color2": "#A66A4D",
+        "color3": "#B99F3A",
+        "color4": "#59A4A3",
+        "color5": "#BDB09F",
+        "color6": "#B6E6F9",
+        "color7": "#ddeef5",
+        "color8": "#9aa6ab",
+        "color9": "#95681E",
+        "color10": "#A66A4D",
+        "color11": "#B99F3A",
+        "color12": "#59A4A3",
+        "color13": "#BDB09F",
+        "color14": "#B6E6F9",
+        "color15": "#ddeef5"
+    }
+}

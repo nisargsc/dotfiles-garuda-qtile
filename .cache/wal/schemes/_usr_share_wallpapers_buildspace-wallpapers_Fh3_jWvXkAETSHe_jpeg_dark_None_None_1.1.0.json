@@ -1,0 +1,27 @@
+{
+    "wallpaper": "/usr/share/wallpapers/buildspace-wallpapers/Fh3_jWvXkAETSHe.jpeg",
+    "alpha": "100",
+    "special": {
+        "background": "#070910",
+        "foreground": "#baa97f",
+        "cursor": "#baa97f"
+    },
+    "colors": {
+        "color0": "#070910",
+        "color1": "#4E192E",
+        "color2": "#562423",
+        "color3": "#672726",
+        "color4": "#774F01",
+        "color5": "#635B01",
+        "color6": "#474A34",
+        "color7": "#baa97f",
+        "color8": "#827658",
+        "color9": "#4E192E",
+        "color10": "#562423",
+        "color11": "#672726",
+        "color12": "#774F01",
+        "color13": "#635B01",
+        "color14": "#474A34",
+        "color15": "#baa97f"
+    }
+}

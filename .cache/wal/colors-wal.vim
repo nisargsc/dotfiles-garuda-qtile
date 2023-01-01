@@ -1,0 +1,23 @@
+" Special
+let wallpaper  = "/home/nisargsc/.local/share/wallpapers/reading-raccoon.jpg"
+let background = "#0d0c09"
+let foreground = "#ddeef5"
+let cursor     = "#ddeef5"
+
+" Colors
+let color0  = "#0d0c09"
+let color1  = "#95681E"
+let color2  = "#AA6B4C"
+let color3  = "#BBA03A"
+let color4  = "#58A8A8"
+let color5  = "#C8B59C"
+let color6  = "#B7E7FB"
+let color7  = "#ddeef5"
+let color8  = "#9aa6ab"
+let color9  = "#95681E"
+let color10 = "#AA6B4C"
+let color11 = "#BBA03A"
+let color12 = "#58A8A8"
+let color13 = "#C8B59C"
+let color14 = "#B7E7FB"
+let color15 = "#ddeef5"
