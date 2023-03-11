@@ -1,0 +1,27 @@
+{
+    "wallpaper": "/home/nisargsc/.local/share/wallpapers/rock-climbing-minimal-4k.jpg",
+    "alpha": "100",
+    "special": {
+        "background": "#101315",
+        "foreground": "#dfe0e1",
+        "cursor": "#dfe0e1"
+    },
+    "colors": {
+        "color0": "#101315",
+        "color1": "#1A5380",
+        "color2": "#305E86",
+        "color3": "#4B7194",
+        "color4": "#708EA9",
+        "color5": "#9DA1A5",
+        "color6": "#A7B8C8",
+        "color7": "#dfe0e1",
+        "color8": "#9c9c9d",
+        "color9": "#1A5380",
+        "color10": "#305E86",
+        "color11": "#4B7194",
+        "color12": "#708EA9",
+        "color13": "#9DA1A5",
+        "color14": "#A7B8C8",
+        "color15": "#dfe0e1"
+    }
+}

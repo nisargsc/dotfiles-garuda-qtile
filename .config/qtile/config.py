@@ -25,19 +25,13 @@
 # SOFTWARE.
 
 
-import json
 import os
-import re
-import socket
 import subprocess
-from typing import List  # noqa: F401
 from libqtile import layout, bar, hook, qtile
-from libqtile.config import Click, Drag, Group, Key, Match, Screen, Rule
+from libqtile.config import  Drag, Group, Key, Match, Screen 
 from libqtile.command import lazy
 from qtile_extras import widget
 from qtile_extras.widget.decorations import PowerLineDecoration
-
-from libqtile.widget import Spacer
 import theme
 
 #mod4 or mod = super key
@@ -48,7 +42,6 @@ home = os.path.expanduser('~')
 
 
 #colors
-primary_color=theme.primary_color
 white="#ffffff"
 black="#000000"
 #font_color=white
@@ -74,16 +67,8 @@ bg_color="#343d46"
 shadow_color="#5d646b"
 #font_color="#d8dee9"
 font_color=white
-#primary_color="#5fb3b3"
 secondary_color="#f07f85"
-
-#with open(home+'/.cache/wal/colors.json', 'r') as f:
-#    colors_json = json.load(f)
-#
-#    font_color=colors_json["special"]["cursor"]
-#    bg_color=colors_json["special"]["background"]
-#    primary_color=colors_json["colors"]["color1"]
-#    secondary_color=colors_json["colors"]["color2"]
+primary_color="#5fb3b3" if ((theme.primary_color=="") or (theme.primary_color==None)) else theme.primary_color
 
 @lazy.function
 def primary_colorpicker(qtile):
@@ -96,7 +81,8 @@ def move_mouse_to_current_window():
 
 @lazy.function
 def lazy_move_mouse_to_current_window(qtile):
-    move_mouse_to_current_window()
+    home = os.path.expanduser('~')
+    subprocess.call([home + '/.config/qtile/scripts/move-mouse-to-current-window.sh'])
 
 @lazy.function
 def window_to_prev_group(qtile):
@@ -113,57 +99,54 @@ def window_to_next_group(qtile):
 myTerm = "alacritty" # My terminal of choice
 
 keys = [
+        # SUPER + FUNCTION KEYS
 
+        Key([mod], "f", lazy.window.toggle_fullscreen()),
+        Key([mod], "q", lazy.window.kill()),
+        Key([mod], "t", lazy.spawn('alacritty')),
+        Key([mod], "v", lazy.spawn('pavucontrol')),
+        Key([mod], "d", lazy.spawn('rofi -show drun')),
+        Key([mod], "b", lazy.spawn('brave --profile-directory=Default'), desc="Open browser in default profile"),
+        #Key([mod], "Escape", lazy.spawn('xkill')),
+        Key([mod], "Return", lazy.spawn(myTerm)),
+        Key([mod], "KP_Enter", lazy.spawn('alacritty')),
+        Key([mod], "x", lazy.shutdown()),
+        Key([mod], "period", 
+            lazy.next_screen(), 
+            lazy_move_mouse_to_current_window(),
+            desc='Move Focus to next monitor'
+            ),
 
+        # SUPER + SHIFT KEYS
 
-# SUPER + FUNCTION KEYS
+        Key([mod, "shift"], "Return", lazy.spawn('pcmanfm')),
+        #    Key([mod, "shift"], "d", lazy.spawn("dmenu_run -i -nb '#191919' -nf '#fea63c' -sb '#fea63c' -sf '#191919' -fn 'NotoMonoRegular:bold:pixelsize=14'")),
+        #    Key([mod, "shift"], "d", lazy.spawn(home + '/.config/qtile/scripts/dmenu.sh')),
+        Key([mod, "shift"], "d", lazy.spawn('nwggrid -p -o 0.4')),
+        Key([mod, "shift"], "q", lazy.window.kill()),
+        Key([mod, "shift"], "r", lazy.restart(), desc="Restart qtile"),
+        Key([mod, "shift"], "x", lazy.spawn(home + '/.config/qtile/scripts/rofi-power-menu.sh')),
 
-    Key([mod], "f", lazy.window.toggle_fullscreen()),
-    Key([mod], "q", lazy.window.kill()),
-    Key([mod], "t", lazy.spawn('xterm')),
-    Key([mod], "v", lazy.spawn('pavucontrol')),
-    Key([mod], "d", lazy.spawn('rofi -show drun')),
-    Key([mod], "b", lazy.spawn('brave --profile-directory=Default')),
-    Key([mod], "Escape", lazy.spawn('xkill')),
-    Key([mod], "Return", lazy.spawn(myTerm)),
-    Key([mod], "KP_Enter", lazy.spawn('alacritty')),
-    Key([mod], "x", lazy.shutdown()),
-    Key([mod], "period", 
-        lazy.next_screen(), 
-        lazy_move_mouse_to_current_window(),
-        desc='Move Focus to next monitor'
-    ),
+        # SUPER + CONTROL KEYS
+        Key([mod, "control"], "r", lazy.reload_config(), desc="reload qtile config"),
+        Key([mod, "control"], "Escape", lazy.spawn('betterlockscreen -l blur --time-format "%I:%M %p" --off 60 -q'), desc="Lock the screen"),
+        Key([mod, "control"], "t", 
+            primary_colorpicker(),
+            lazy.reload_config(),
+            desc="Colorpicker for primary_color"
+            ),
+        # CONTROL + ALT KEYS
 
-# SUPER + SHIFT KEYS
+        Key(["mod1", "control"], "o", lazy.spawn(home + '/.config/qtile/scripts/picom-toggle.sh')),
+        Key(["mod1", "control"], "t", lazy.spawn('xterm')),
+        Key(["mod1", "control"], "u", lazy.spawn('pavucontrol')),
 
-    Key([mod, "shift"], "Return", lazy.spawn('pcmanfm')),
-#    Key([mod, "shift"], "d", lazy.spawn("dmenu_run -i -nb '#191919' -nf '#fea63c' -sb '#fea63c' -sf '#191919' -fn 'NotoMonoRegular:bold:pixelsize=14'")),
-#    Key([mod, "shift"], "d", lazy.spawn(home + '/.config/qtile/scripts/dmenu.sh')),
-    Key([mod, "shift"], "d", lazy.spawn('nwggrid -p -o 0.4')),
-    Key([mod, "shift"], "q", lazy.window.kill()),
-    Key([mod, "shift"], "r", lazy.restart()),
-    Key([mod, "shift"], "x", lazy.shutdown()),
+        # ALT + ... KEYS
 
-# SUPER + CONTROL KEYS
-    Key([mod, "control"], "r", lazy.reload_config(), desc="reload qutile config"),
-    Key([mod, "control"], "t", 
-        primary_colorpicker(),
-        lazy.reload_config(),
-        desc="Colorpicker for primary_color"
-    ),
-# CONTROL + ALT KEYS
-
-    Key(["mod1", "control"], "o", lazy.spawn(home + '/.config/qtile/scripts/picom-toggle.sh')),
-    Key(["mod1", "control"], "t", lazy.spawn('xterm')),
-    Key(["mod1", "control"], "u", lazy.spawn('pavucontrol')),
-
-# ALT + ... KEYS
-
-
-    Key(["mod1"], "p", lazy.spawn('pamac-manager')),
-    Key(["mod1"], "f", lazy.spawn('firedragon')),
-    Key(["mod1"], "m", lazy.spawn('pcmanfm')),
-    Key(["mod1"], "w", lazy.spawn('garuda-welcome')),
+        Key(["mod1"], "p", lazy.spawn('pamac-manager')),
+        Key(["mod1"], "f", lazy.spawn('firedragon')),
+        Key(["mod1"], "m", lazy.spawn('pcmanfm')),
+        Key(["mod1"], "w", lazy.spawn('garuda-welcome')),
 
 
 # CONTROL + SHIFT KEYS
@@ -198,6 +181,9 @@ keys = [
 #    Key([], "XF86AudioPrev", lazy.spawn("mpc prev")),
 #    Key([], "XF86AudioStop", lazy.spawn("mpc stop")),
 
+# POWER MENU
+    Key([], "XF86Poweroff", lazy.spawn(home + '/.config/qtile/scripts/rofi-power-menu.sh')),
+
 # QTILE LAYOUT KEYS
     Key([mod], "n", lazy.layout.normalize()),
     Key([mod], "space", lazy.next_layout()),
@@ -206,36 +192,36 @@ keys = [
     Key([mod], "Up", 
         lazy.layout.up(),
         lazy_move_mouse_to_current_window(),
-    ),
+        ),
     Key([mod], "Down", 
         lazy.layout.down(),
         lazy_move_mouse_to_current_window(),
-    ),
+        ),
     Key([mod], "Left", 
         lazy.layout.left(),
         lazy_move_mouse_to_current_window(),
-    ),
+        ),
     Key([mod], "Right", 
         lazy.layout.right(),
         lazy_move_mouse_to_current_window(),
-    ),
+        ),
 
     Key([mod], "k", 
         lazy.layout.up(),
         lazy_move_mouse_to_current_window(),
-    ),
+        ),
     Key([mod], "j", 
         lazy.layout.down(),
         lazy_move_mouse_to_current_window(),
-    ),
+        ),
     Key([mod], "h", 
         lazy.layout.left(),
         lazy_move_mouse_to_current_window(),
-    ),
+        ),
     Key([mod], "l", 
         lazy.layout.right(),
         lazy_move_mouse_to_current_window(),
-    ),
+        ),
 
 
 # RESIZE UP, DOWN, LEFT, RIGHT
@@ -330,56 +316,56 @@ group_names = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0",]
 #group_names = ["ampersand", "eacute", "quotedbl", "apostrophe", "parenleft", "section", "egrave", "exclam", "ccedilla", "agrave",]
 
 #group_labels = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0",]
-group_labels = ["" for i in range(len(group_names))]
+group_labels = ["" for _ in range(len(group_names))]
 #group_labels = [
-#        "Term", #1
-#        "Term", #2
-#        "3", #3
-#        "4", #4
-#        "5", #5
-#        "6", #6
-#        "7", #7
-#        "Media", #8
-#        "Web", #9
-#        "Code", #0
-#]
+        #        "Term", #1
+        #        "Term", #2
+        #        "3", #3
+        #        "4", #4
+        #        "5", #5
+        #        "6", #6
+        #        "7", #7
+        #        "Media", #8
+        #        "Web", #9
+        #        "Code", #0
+        #]
 #group_labels = ["α", "β", "γ", "δ", "ε", "ζ", "η", "θ", "ι", "κa,]
 #group_labels = ["", "", "", "", "","",]
 #group_labels = ["Web", "Edit/chat", "Image", "Gimp", "Meld", "Video", "Vb", "Files", "Mail", "Music",]
 
-group_layouts = ["monadtall", "monadtall", "monadtall", "monadtall", "matrix", "matrix", "max", "max", "max", "max",]
+group_layouts = ["monadtall", "monadwide", "monadtall", "monadwide", "matrix", "matrix", "max", "max", "max", "max",]
 #group_layouts = ["monadtall", "matrix", "monadtall", "bsp", "monadtall", "matrix", "monadtall", "bsp", "monadtall", "monadtall",]
 
 for i in range(len(group_names)):
     group = Group(
-        name=group_names[i],
-        layout=group_layouts[i].lower(),
-        label=group_labels[i],
-    )
+            name=group_names[i],
+            layout=group_layouts[i].lower(),
+            label=group_labels[i],
+            )
 
     groups.append(group)
 
 for i in groups:
     keys.extend([
 
-#CHANGE WORKSPACES
+        #CHANGE WORKSPACES
         Key([mod], i.name, lazy.group[i.name].toscreen()),
         Key([mod], "Tab", lazy.screen.next_group()),
         Key([mod, "shift" ], "Tab", lazy.screen.prev_group()),
         Key(["mod1"], "Tab", lazy.screen.next_group(skip_empty=True)),
         Key(["mod1", "shift"], "Tab", lazy.screen.prev_group(skip_empty=True)),
 
-# MOVE WINDOW TO SELECTED WORKSPACE 1-10 AND STAY ON WORKSPACE
+        # MOVE WINDOW TO SELECTED WORKSPACE 1-10 AND STAY ON WORKSPACE
         Key([mod, "shift"], i.name, lazy.window.togroup(i.name)),
-# MOVE WINDOW TO SELECTED WORKSPACE 1-10 AND FOLLOW MOVED WINDOW TO WORKSPACE
+        # MOVE WINDOW TO SELECTED WORKSPACE 1-10 AND FOLLOW MOVED WINDOW TO WORKSPACE
         Key([mod, mod2], i.name, lazy.window.togroup(i.name) , lazy.group[i.name].toscreen()),
-    ])
+        ])
 
     # Set workspace specific to a application
     if(i.label=='Web'):
         i.mathches = [
-            Match(wm_class='code-oss'),
-        ]
+                Match(wm_class='code-oss'),
+                ]
 
 
 def init_layout_theme():
@@ -388,34 +374,34 @@ def init_layout_theme():
             "border_width":2,
             "border_focus": primary_color,
             "border_normal": bg_color
-        }
+            }
 
 layout_theme = init_layout_theme()
 
 
 layouts = [
-    layout.MonadTall(**layout_theme),
-    layout.MonadWide(**layout_theme),
-    layout.Matrix(**layout_theme),
-    layout.Bsp(**layout_theme),
-    layout.Floating(**layout_theme),
-    layout.RatioTile(**layout_theme),
-    layout.Max(**layout_theme),
-    layout.Columns(**layout_theme),
-    layout.Stack(**layout_theme),
-    layout.Tile(**layout_theme),
-    layout.VerticalTile(**layout_theme),
-    layout.Zoomy(**layout_theme)
-    #layout.TreeTab(
-    #    sections=['1', '2', '3'],
-    #    bg_color = bg_color,
-    #    active_bg = primary_color,
-    #    inactive_bg = shadow_color,
-    #    padding_y =5,
-    #    section_top =10,
-    #    panel_width = 280,
-    #),
-]
+        layout.MonadTall(**layout_theme),
+        layout.MonadWide(**layout_theme),
+        layout.Matrix(**layout_theme),
+        #layout.Bsp(**layout_theme),
+        layout.Max(**layout_theme),
+        layout.Floating(**layout_theme),
+        #layout.RatioTile(**layout_theme),
+        #layout.Columns(**layout_theme),
+        #layout.Stack(**layout_theme),
+        #layout.Tile(**layout_theme),
+        #layout.VerticalTile(**layout_theme),
+        #layout.Zoomy(**layout_theme)
+        #layout.TreeTab(
+            #    sections=['1', '2', '3'],
+            #    bg_color = bg_color,
+            #    active_bg = primary_color,
+            #    inactive_bg = shadow_color,
+            #    padding_y =5,
+            #    section_top =10,
+            #    panel_width = 280,
+            #),
+        ]
 
 # COLORS FOR THE BAR
 
@@ -449,93 +435,91 @@ def init_colors():
 colors = init_colors()
 
 powerlineRightRound = {
-    "decorations": [
-        PowerLineDecoration(path="rounded_right")
-    ]
-}
+        "decorations": [
+            PowerLineDecoration(path="rounded_right")
+            ]
+        }
 
 powerlineLeftRound = {
-    "decorations": [
-        PowerLineDecoration(path="rounded_left")
-    ]
-}
+        "decorations": [
+            PowerLineDecoration(path="rounded_left")
+            ]
+        }
 
 #powerline = {
-#    "decorations": [
-#        PowerLineDecoration(path="forward_slash")
-#    ]
-#}
+        #    "decorations": [
+            #        PowerLineDecoration(path="forward_slash")
+            #    ]
+        #}
 
 
 # WIDGETS FOR THE BAR
 
 def init_widgets_defaults():
     return dict(
-                font="Noto Sans",
-                fontsize = 9,
-                padding = 2,
+            font="Noto Sans",
+            fontsize = 9,
+            padding = 2,
             )
 
 widget_defaults = init_widgets_defaults()
-sapration = 20
+padding_spacer = 20
 
 def init_widgets_list():
-    prompt = "{0}@{1}: ".format(os.environ["USER"], socket.gethostname())
     widgets_list = [
-
-                widget.Spacer(
-                    #background=shadow_color,
-                    length=sapration,
-                    **powerlineRightRound,
+            widget.Spacer(
+                #background=shadow_color,
+                length=padding_spacer,
+                **powerlineRightRound,
                 ),
 
-               widget.CurrentLayoutIcon(
-                       custom_icon_paths = [os.path.expanduser("~/.config/qtile/icons")],
-                       background = bg_color,
-                       foreground = font_color,
-                       padding = 0,
-                       scale = 0.7,
-                       ),
-
-               widget.CurrentLayout(
-                    font = "Noto Sans Bold",
-                    fontsize = 12,
-                    background = bg_color,
-                    foreground = font_color,
-                    #**powerline,
-                    **powerlineLeftRound,
-                ),
-                widget.Spacer(
-                    #background=shadow_color,
-                    length=5,
-                    **powerlineRightRound,
-                ),
-                widget.TaskList(
-                    font = "Noto Sans",
-                    highlight_method = 'block', # or block
-                    max_title_width=150,
-                    spacing=5,
-                    rounded=True,
-                    padding=3,
-                    margin=2,
-                    fontsize=14,
-                    border=primary_color,
-                    unfocused_border=bg_color,
-                    txt_floating='🗗',
-                    txt_minimized='>_ ',
-                    borderwidth = 1,
-                    foreground=font_color,
-                    **powerlineLeftRound,
-                    #**powerline,
-                    #unfocused_border = 'border'
+            widget.CurrentLayoutIcon(
+                custom_icon_paths = [os.path.expanduser("~/.config/qtile/icons")],
+                background = bg_color,
+                foreground = font_color,
+                padding = 0,
+                scale = 0.7,
                 ),
 
-                widget.Spacer(
-                    #background=shadow_color,
-                    length=5,
-                    **powerlineRightRound,
+            widget.CurrentLayout(
+                font = "Noto Sans Bold",
+                fontsize = 12,
+                background = bg_color,
+                foreground = font_color,
+                #**powerline,
+                **powerlineLeftRound,
                 ),
-               widget.GroupBox(
+            widget.Spacer(
+                #background=shadow_color,
+                length=5,
+                **powerlineRightRound,
+                ),
+            widget.TaskList(
+                font = "Noto Sans",
+                highlight_method = 'block', # or block
+                max_title_width=150,
+                spacing=5,
+                rounded=True,
+                padding=3,
+                margin=2,
+                fontsize=14,
+                border=primary_color,
+                unfocused_border=bg_color,
+                txt_floating='🗗',
+                txt_minimized='>_ ',
+                borderwidth = 1,
+                foreground=font_color,
+                **powerlineLeftRound,
+                #**powerline,
+                #unfocused_border = 'border'
+                ),
+
+            widget.Spacer(
+                #background=shadow_color,
+                length=5,
+                **powerlineRightRound,
+                ),
+            widget.GroupBox(
                     background= bg_transparent,
                     foreground= font_color,
                     font='UbuntuMono Nerd Font',
@@ -562,155 +546,192 @@ def init_widgets_list():
                     #visible_groups=['1','2','9','0'],
                     #**powerline,
                     **powerlineLeftRound,
-                ),
-                widget.Spacer(
+                    ),
+            widget.Spacer(
                     #background=shadow_color,
-                    length=sapration,
+                    length=5,
                     **powerlineRightRound,
-                ),
+                    ),
 
-                widget.CPU(
-                        font="Noto Sans Bold",
-                        #format = '{MemUsed}M/{MemTotal}M',
-                        update_interval = 1,
-                        fontsize = 12,
-                        background = bg_color,
-                        foreground = font_color,
-                        mouse_callbacks = {'Button1': lambda : qtile.cmd_spawn(myTerm + ' -e htop')},
-                        #**powerline,
-                       ),
+            widget.Net(
+                    #interface="enp7s0",
+                    font="Noto Sans Bold",
+                    #format="{down:.1f}{down_suffix} ↓↑ {up:.1f}{up_suffix}",
+                    update_interval = 1,
+                    fontsize = 12,
+                    background = bg_color,
+                    foreground = font_color,
+                    mouse_callbacks = {'Button1': lambda : qtile.cmd_spawn(myTerm + ' -e htop')},
+                    #**powerline,
+                    ),
 
-                widget.Spacer(
+            widget.Spacer(
                     background=bg_color,
                     length=5,
-                ),
+                    ),
 
-                widget.Sep(
+            widget.Sep(
                     background= bg_color,
                     foreground= font_color,
                     linewidth=2,
-                #    **powerline,
-                ),
+                    #    **powerline,
+                    ),
 
-               widget.Memory(
-                        font="Noto Sans Bold",
-                        format = '{MemUsed: .2f} {mm} /{MemTotal: .2f} {mm}',
-                        update_interval = 1,
-                        fontsize = 12,
-                        measure_mem = 'G',
-                        background = bg_color,
-                        foreground = font_color,
-                        mouse_callbacks = {'Button1': lambda : qtile.cmd_spawn(myTerm + ' -e htop')},
-                        **powerlineLeftRound,
-                        #**powerline,
-                       ),
+            widget.CPU(
+                    font="Noto Sans Bold",
+                    #format = '{MemUsed}M/{MemTotal}M',
+                    update_interval = 1,
+                    fontsize = 12,
+                    background = bg_color,
+                    foreground = font_color,
+                    mouse_callbacks = {'Button1': lambda : qtile.cmd_spawn(myTerm + ' -e htop')},
+                    #**powerline,
+                    ),
 
-               #widget.Pomodoro(
-               #         font="Noto Sans",
-               #         fontsize = 12,
-               #         foreground = font_color,
-               #         background = bg_color,
-               #         **powerline,
-               #        ),
-               #widget.Clipboard(
-               #         font="Noto Sans",
-               #         fontsize = 12,
-               #         foreground = font_color,
-               #         background = bg_color,
-               #         **powerline,
-               # ),
+            widget.Spacer(
+                    background=bg_color,
+                    length=5,
+                    ),
 
-                widget.Spacer(
+            widget.Sep(
+                    background= bg_color,
+                    foreground= font_color,
+                    linewidth=2,
+                    #    **powerline,
+                    ),
+
+            widget.Memory(
+                    font="Noto Sans Bold",
+                    format = '{MemUsed: .2f} {mm} /{MemTotal: .2f} {mm}',
+                    update_interval = 1,
+                    fontsize = 12,
+                    measure_mem = 'G',
+                    background = bg_color,
+                    foreground = font_color,
+                    mouse_callbacks = {'Button1': lambda : qtile.cmd_spawn(myTerm + ' -e htop')},
+                    **powerlineLeftRound,
+                    #**powerline,
+                    ),
+
+            #widget.Pomodoro(
+                    #         font="Noto Sans",
+                    #         fontsize = 12,
+                    #         foreground = font_color,
+                    #         background = bg_color,
+                    #         **powerline,
+                    #        ),
+            #widget.Clipboard(
+                    #         font="Noto Sans",
+                    #         fontsize = 12,
+                    #         foreground = font_color,
+                    #         background = bg_color,
+                    #         **powerline,
+                    # ),
+
+            widget.Spacer(
                     #background=shadow_color,
-                    length=sapration,
+                    length=padding_spacer,
                     **powerlineRightRound,
-                ),
+                    ),
 
-               widget.Clock(
+            widget.Clock(
                     font="Noto Sans Bold",
                     background = bg_color,
                     foreground = font_color,
                     fontsize = 12,
-                    format="%A %d/%m/%Y %I:%M %p",
+                    format="%a %d-%m-%Y | %I:%M %p",
                     **powerlineLeftRound,
                     #**powerline,
-                ),
+                    ),
 
-                widget.Spacer(
+            widget.Spacer(
                     #background=shadow_color,
-                    length=sapration,
+                    length=5,
                     **powerlineRightRound,
-                ),
-                widget.UPowerWidget(
+                    ),
+
+            widget.Spacer(
+                    #background=shadow_color,
+                    length=5,
+                    **powerlineRightRound,
+                    ),
+
+            #widget.Battery(
+                    #     font = "Noto Sans Bold",
+                    #     fontsize = 12,
+                    #     background = bg_color,
+                    #     foreground = font_color,
+                    #     **powerlineLeftRound,
+                    #     ),
+
+            widget.Systray(
+                    padding = 2,
+                    #**powerline,
+                    ),
+
+            widget.Spacer(
+                    length=2,
+                    ),
+
+            widget.UPowerWidget(
                     font = "Noto Sans Bold",
                     fontsize = 12,
-                    background = bg_color,
+                    background = bg_transparent,
                     foreground = font_color,
                     text_displaytime = 3,
+                    ),
+            widget.Spacer(
+                    length=2,
+                    ),
+
+            widget.TextBox(
+                    fmt= " ",
+                    mouse_callbacks = {'Button1': lambda : qtile.cmd_spawn(home + '/.config/qtile/scripts/rofi-power-menu.sh')},
+                    background= bg_transparent,
+                    foreground= font_color,
+                    font='UbuntuMono Nerd Font',
+                    fontsize = 23,
                     **powerlineLeftRound,
                     ),
-               #widget.Battery(
-               #     font = "Noto Sans Bold",
-               #     fontsize = 12,
-               #     background = bg_color,
-               #     foreground = font_color,
-               #     **powerlineLeftRound,
-               #     ),
-
-               widget.Spacer(
-                       #background=shadow_color,
-                       length=sapration,
-                       **powerlineRightRound,
-                       ),
-
-               widget.Systray(
-                       padding = 2,
-                       **powerlineLeftRound,
-                       #**powerline,
-                       ),
-
-               widget.Spacer(
-                       #background=shadow_color,
-                       length=sapration,
-                       ),
-              ]
+            ]
     return widgets_list
 
 
 def init_screens():
-    return [Screen(
+    return [
+            Screen(
                 top=bar.Bar(
                     widgets=init_widgets_list(), 
                     size=30,
                     margin=[10,20,0,20],
                     opacity=1,
                     background= bg_transparent,
-                #    border_color = shadow_color,
-                #   border_width = 2,
+                    #    border_color = shadow_color,
+                    #   border_width = 2,
+                    ),
                 ),
-            ),
             Screen(
                 top=bar.Bar(
-                    widgets=init_widgets_list()[:-2],
+                    widgets=init_widgets_list()[:-5]+init_widgets_list()[-4:],
                     size=30,
                     margin=[10,20,0,20],
                     opacity=1,
                     background= bg_transparent,
                     #border_color = shadow_color,
                     #border_width = 2,
+                    )
                 )
-            )
             ]
 screens = init_screens()
 
 
 # MOUSE CONFIGURATION
 mouse = [
-    Drag([mod], "Button1", lazy.window.set_position_floating(),
-         start=lazy.window.get_position()),
-    Drag([mod], "Button3", lazy.window.set_size_floating(),
-         start=lazy.window.get_size())
-]
+        Drag([mod], "Button1", lazy.window.set_position_floating(),
+             start=lazy.window.get_position()),
+        Drag([mod], "Button3", lazy.window.set_size_floating(),
+             start=lazy.window.get_size())
+        ]
 
 dgroups_key_binder = None
 dgroups_app_rules = []
@@ -722,25 +743,25 @@ def send_to_group(window):
 
     # Assign window with wm_class to groups
     grp = {
-        "1": [],
-        "2": [],
-        "3": [],
-        "4": [],
-        "5": [],
-        "6": [],
-        "7": [
-            "obs", "nitrogen",
-            ],
-        "8": [
-            "vlc", "spotify", "Spotify",
-            ],
-        "9": [
-            "brave", "brave-browser", "Brave", "Brave-browser",
-            ],
-        "0": [
-            "code-oss", "code", "Code-oss", "Code",
-            ],
-    } 
+            "1": [],
+            "2": [],
+            "3": [],
+            "4": [],
+            "5": [],
+            "6": [],
+            "7": [
+                "obs", "nitrogen",
+                ],
+            "8": [
+                "vlc", "spotify", "Spotify",
+                ],
+            "9": [
+                "brave", "brave-browser", "Brave", "Brave-browser",
+                ],
+            "0": [
+                "code-oss", "code", "Code-oss", "Code",
+                ],
+            } 
 
     for grp_name in grp:
         if (wm_class in grp[grp_name]):
@@ -754,19 +775,19 @@ def send_to_group_fix(window):
 
     # Assign window with wm_class to groups
     grp = {
-        "1": [],
-        "2": [],
-        "3": [],
-        "4": [],
-        "5": [],
-        "6": [],
-        "7": [],
-        "8": [
-            "spotify", "Spotify",
-            ],
-        "9": [],
-        "0": [],
-    } 
+            "1": [],
+            "2": [],
+            "3": [],
+            "4": [],
+            "5": [],
+            "6": [],
+            "7": [],
+            "8": [
+                "spotify", "Spotify",
+                ],
+            "9": [],
+            "0": [],
+            } 
 
     for grp_name in grp:
         if (wm_class in grp[grp_name]):
@@ -788,7 +809,7 @@ def start_always():
 @hook.subscribe.client_new
 def set_floating(window):
     if (window.window.get_wm_transient_for()
-            or window.window.get_wm_type() in floating_types):
+        or window.window.get_wm_type() in floating_types):
         window.floating = True
 
 
@@ -797,44 +818,55 @@ def set_floating(window):
 def move_mouse_to_new_window(window):
     move_mouse_to_current_window()
 
+# Move mouse on focued window
+@hook.subscribe.focus_change
+def move_mouse_to_focued_window(window):
+    move_mouse_to_current_window()
+
 floating_types = ["notification", "toolbar", "splash", "dialog"]
 
 
 follow_mouse_focus = True
 bring_front_click = True
 cursor_warp = False
-floating_layout = layout.Floating(float_rules=[
-    *layout.Floating.default_float_rules,
-    Match(wm_class='confirm'),
-    Match(wm_class='dialog'),
-    Match(wm_class='download'),
-    Match(wm_class='error'),
-    Match(wm_class='file_progress'),
-    Match(wm_class='notification'),
-    Match(wm_class='splash'),
-    Match(wm_class='toolbar'),
-    Match(wm_class='confirmreset'),
-    Match(wm_class='makebranch'),
-    Match(wm_class='maketag'),
-    Match(wm_class='Arandr'),
-    Match(wm_class='feh'),
-    Match(wm_class='Galculator'),
-    Match(title='branchdialog'),
-    Match(title='Open File'),
-    Match(title='pinentry'),
-    Match(title='Brave'),
-    Match(role='pop-up'),
-    #Match(wm_instance_class='crx_nkbihfbeogaeaoehlefnkodbefgpgknn'), # MetaMask Pop-up
-    Match(wm_class='ssh-askpass'),
-    Match(wm_class='lxpolkit'),
-    Match(wm_class='Lxpolkit'),
-    Match(wm_class='yad'),
-    Match(wm_class='Yad'),
-    Match(wm_class='Cairo-dock'),
-    Match(wm_class='cairo-dock'),
-
-
-],  fullscreen_border_width = 0, border_width = 0)
+floating_layout = layout.Floating(
+        float_rules=[
+            *layout.Floating.default_float_rules,
+            Match(wm_class='confirm'),
+            Match(wm_class='dialog'),
+            Match(wm_class='download'),
+            Match(wm_class='error'),
+            Match(wm_class='file_progress'),
+            Match(wm_class='notification'),
+            Match(wm_class='splash'),
+            Match(wm_class='toolbar'),
+            Match(wm_class='confirmreset'),
+            Match(wm_class='makebranch'),
+            Match(wm_class='maketag'),
+            Match(wm_class='Arandr'),
+            Match(wm_class='feh'),
+            Match(wm_class='Galculator'),
+            Match(title='branchdialog'),
+            Match(title='Open File'),
+            Match(title='pinentry'),
+            Match(title='Brave'),
+            Match(title='Brave'),
+            Match(role='pop-up'),
+            #Match(wm_instance_class='crx_nkbihfbeogaeaoehlefnkodbefgpgknn'), # MetaMask Pop-up
+            Match(wm_class='ssh-askpass'),
+            Match(wm_class='lxpolkit'),
+            Match(wm_class='Lxpolkit'),
+            Match(wm_class='yad'),
+            Match(wm_class='Yad'),
+            Match(wm_class='Cairo-dock'),
+            Match(wm_class='cairo-dock'),
+            ],  
+        fullscreen_border_width = 0, 
+        border_width=0,
+        #border_width=2,
+        #border_focus= primary_color,
+        #border_normal= bg_color
+        )
 auto_fullscreen = True
 
 focus_on_window_activation = "focus" # or smart

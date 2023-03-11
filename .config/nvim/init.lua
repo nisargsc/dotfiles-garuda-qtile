@@ -43,6 +43,14 @@ require('packer').startup(function(use)
     after = 'nvim-treesitter',
   }
 
+  use({
+    "jose-elias-alvarez/null-ls.nvim",
+    config = function()
+      require("null-ls").setup()
+    end,
+    requires = { "nvim-lua/plenary.nvim" },
+  })
+
   -- Git related plugins
   use 'tpope/vim-fugitive'
   use 'tpope/vim-rhubarb'

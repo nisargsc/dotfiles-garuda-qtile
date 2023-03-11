@@ -188,6 +188,14 @@ alias dot="/usr/bin/git --git-dir=$HOME/dotfiles-git-bare/ --work-tree=$HOME"
 alias blktmp="ganache-cli --networkId 1337"
 alias blk="ganache-cli --networkId 1337 --db ~/hdd/myne/ganache-db/"
 
+# Warp CLI
+alias wrp="warp-cli connect"
+alias diwrp="warp-cli disconnect"
+
+# Keyboard Layout Change
+alias colmak="setxkbmap us -variant colemak_dh"
+alias qwerty="setxkbmap us"
+
 ## Run fastfetch if session is interactive
 # if status --is-interactive && type -q fastfetch
 #   fastfetch --load-config neofetch

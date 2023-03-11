@@ -1,0 +1,27 @@
+{
+    "wallpaper": "/home/nisargsc/.local/share/wallpapers/dock-wood-light.jpg",
+    "alpha": "100",
+    "special": {
+        "background": "#040709",
+        "foreground": "#c7ebf4",
+        "cursor": "#c7ebf4"
+    },
+    "colors": {
+        "color0": "#040709",
+        "color1": "#5B7989",
+        "color2": "#4698BA",
+        "color3": "#099EDF",
+        "color4": "#20D1FB",
+        "color5": "#68E2FA",
+        "color6": "#A2A39B",
+        "color7": "#c7ebf4",
+        "color8": "#8ba4aa",
+        "color9": "#5B7989",
+        "color10": "#4698BA",
+        "color11": "#099EDF",
+        "color12": "#20D1FB",
+        "color13": "#68E2FA",
+        "color14": "#A2A39B",
+        "color15": "#c7ebf4"
+    }
+}

@@ -1,0 +1,27 @@
+{
+    "wallpaper": "/home/nisargsc/.local/share/wallpapers/lexica/9195bebb-6034-4ed9-b96b-97210c3515c9.jpeg",
+    "alpha": "100",
+    "special": {
+        "background": "#0F211E",
+        "foreground": "#c6e4d5",
+        "cursor": "#c6e4d5"
+    },
+    "colors": {
+        "color0": "#0F211E",
+        "color1": "#1E779F",
+        "color2": "#4F7587",
+        "color3": "#947885",
+        "color4": "#2291A2",
+        "color5": "#52C5BF",
+        "color6": "#309BCF",
+        "color7": "#c6e4d5",
+        "color8": "#8a9f95",
+        "color9": "#1E779F",
+        "color10": "#4F7587",
+        "color11": "#947885",
+        "color12": "#2291A2",
+        "color13": "#52C5BF",
+        "color14": "#309BCF",
+        "color15": "#c6e4d5"
+    }
+}

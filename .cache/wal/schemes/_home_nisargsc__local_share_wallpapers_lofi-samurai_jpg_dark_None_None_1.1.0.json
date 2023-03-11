@@ -1,0 +1,27 @@
+{
+    "wallpaper": "/home/nisargsc/.local/share/wallpapers/lofi-samurai.jpg",
+    "alpha": "100",
+    "special": {
+        "background": "#151819",
+        "foreground": "#dad0dd",
+        "cursor": "#dad0dd"
+    },
+    "colors": {
+        "color0": "#151819",
+        "color1": "#A75A6B",
+        "color2": "#69895D",
+        "color3": "#BBA85D",
+        "color4": "#5B708C",
+        "color5": "#B7709F",
+        "color6": "#67C1CD",
+        "color7": "#dad0dd",
+        "color8": "#98919a",
+        "color9": "#A75A6B",
+        "color10": "#69895D",
+        "color11": "#BBA85D",
+        "color12": "#5B708C",
+        "color13": "#B7709F",
+        "color14": "#67C1CD",
+        "color15": "#dad0dd"
+    }
+}
