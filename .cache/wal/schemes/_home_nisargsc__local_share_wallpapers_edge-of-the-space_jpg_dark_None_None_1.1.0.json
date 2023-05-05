@@ -1,0 +1,27 @@
+{
+    "wallpaper": "/home/nisargsc/.local/share/wallpapers/edge-of-the-space.jpg",
+    "alpha": "100",
+    "special": {
+        "background": "#080F1D",
+        "foreground": "#e2bab8",
+        "cursor": "#e2bab8"
+    },
+    "colors": {
+        "color0": "#080F1D",
+        "color1": "#4B476E",
+        "color2": "#9E4F71",
+        "color3": "#C45470",
+        "color4": "#2C5094",
+        "color5": "#545AA0",
+        "color6": "#BA668E",
+        "color7": "#e2bab8",
+        "color8": "#9e8280",
+        "color9": "#4B476E",
+        "color10": "#9E4F71",
+        "color11": "#C45470",
+        "color12": "#2C5094",
+        "color13": "#545AA0",
+        "color14": "#BA668E",
+        "color15": "#e2bab8"
+    }
+}

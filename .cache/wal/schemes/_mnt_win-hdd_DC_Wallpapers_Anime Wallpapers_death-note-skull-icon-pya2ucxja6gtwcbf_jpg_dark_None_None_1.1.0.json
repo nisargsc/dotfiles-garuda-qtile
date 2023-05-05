@@ -1,0 +1,27 @@
+{
+    "wallpaper": "/mnt/win-hdd/DC/Wallpapers/Anime Wallpapers/death-note-skull-icon-pya2ucxja6gtwcbf.jpg",
+    "alpha": "100",
+    "special": {
+        "background": "#010101",
+        "foreground": "#f1f1f1",
+        "cursor": "#f1f1f1"
+    },
+    "colors": {
+        "color0": "#010101",
+        "color1": "#4D4D4D",
+        "color2": "#6F6F6F",
+        "color3": "#8F8F8F",
+        "color4": "#AEAEAE",
+        "color5": "#CFCFCF",
+        "color6": "#E7E7E7",
+        "color7": "#f1f1f1",
+        "color8": "#a8a8a8",
+        "color9": "#4D4D4D",
+        "color10": "#6F6F6F",
+        "color11": "#8F8F8F",
+        "color12": "#AEAEAE",
+        "color13": "#CFCFCF",
+        "color14": "#E7E7E7",
+        "color15": "#f1f1f1"
+    }
+}

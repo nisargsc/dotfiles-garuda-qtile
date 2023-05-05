@@ -1,1 +1,1 @@
-primary_color = "#95681E"
+primary_color = "#679C69"

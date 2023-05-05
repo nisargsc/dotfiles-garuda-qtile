@@ -1,0 +1,27 @@
+{
+    "wallpaper": "/home/nisargsc/.local/share/wallpapers/space-god.jpg",
+    "alpha": "100",
+    "special": {
+        "background": "#0A0B11",
+        "foreground": "#bbc1c0",
+        "cursor": "#bbc1c0"
+    },
+    "colors": {
+        "color0": "#0A0B11",
+        "color1": "#252959",
+        "color2": "#2F4A5F",
+        "color3": "#58515C",
+        "color4": "#A55D38",
+        "color5": "#966763",
+        "color6": "#505E90",
+        "color7": "#bbc1c0",
+        "color8": "#828786",
+        "color9": "#252959",
+        "color10": "#2F4A5F",
+        "color11": "#58515C",
+        "color12": "#A55D38",
+        "color13": "#966763",
+        "color14": "#505E90",
+        "color15": "#bbc1c0"
+    }
+}

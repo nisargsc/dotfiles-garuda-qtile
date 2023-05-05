@@ -1,0 +1,27 @@
+{
+    "wallpaper": "/mnt/win-hdd/DC/Wallpapers/Anime Wallpapers/death-note-words-abstract-avvoerqa4jvx7b0b.jpg",
+    "alpha": "100",
+    "special": {
+        "background": "#060606",
+        "foreground": "#dfdede",
+        "cursor": "#dfdede"
+    },
+    "colors": {
+        "color0": "#060606",
+        "color1": "#8E5959",
+        "color2": "#8F8080",
+        "color3": "#909090",
+        "color4": "#AC9393",
+        "color5": "#AFAFAF",
+        "color6": "#C6B6B6",
+        "color7": "#dfdede",
+        "color8": "#9c9b9b",
+        "color9": "#8E5959",
+        "color10": "#8F8080",
+        "color11": "#909090",
+        "color12": "#AC9393",
+        "color13": "#AFAFAF",
+        "color14": "#C6B6B6",
+        "color15": "#dfdede"
+    }
+}

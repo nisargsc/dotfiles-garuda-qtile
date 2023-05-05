@@ -1,0 +1,27 @@
+{
+    "wallpaper": "/home/nisargsc/.local/share/wallpapers/gruvbox-abstract-shapes-2-2560\u00d71080.jpg",
+    "alpha": "100",
+    "special": {
+        "background": "#181818",
+        "foreground": "#99b8b9",
+        "cursor": "#99b8b9"
+    },
+    "colors": {
+        "color0": "#181818",
+        "color1": "#877A6C",
+        "color2": "#679C69",
+        "color3": "#9B961A",
+        "color4": "#D89921",
+        "color5": "#928374",
+        "color6": "#B26286",
+        "color7": "#99b8b9",
+        "color8": "#6b8081",
+        "color9": "#877A6C",
+        "color10": "#679C69",
+        "color11": "#9B961A",
+        "color12": "#D89921",
+        "color13": "#928374",
+        "color14": "#B26286",
+        "color15": "#99b8b9"
+    }
+}

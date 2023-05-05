@@ -1,0 +1,27 @@
+{
+    "wallpaper": "/home/nisargsc/.local/share/wallpapers/cute-glowing-creature-in-a-forest.jpg",
+    "alpha": "100",
+    "special": {
+        "background": "#0f0a0f",
+        "foreground": "#aae5f1",
+        "cursor": "#aae5f1"
+    },
+    "colors": {
+        "color0": "#0f0a0f",
+        "color1": "#354D6D",
+        "color2": "#445775",
+        "color3": "#36658F",
+        "color4": "#4A6E93",
+        "color5": "#4E8BB4",
+        "color6": "#59ABD2",
+        "color7": "#aae5f1",
+        "color8": "#76a0a8",
+        "color9": "#354D6D",
+        "color10": "#445775",
+        "color11": "#36658F",
+        "color12": "#4A6E93",
+        "color13": "#4E8BB4",
+        "color14": "#59ABD2",
+        "color15": "#aae5f1"
+    }
+}

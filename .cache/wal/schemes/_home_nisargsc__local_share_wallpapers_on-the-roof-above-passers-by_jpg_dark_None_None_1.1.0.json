@@ -1,0 +1,27 @@
+{
+    "wallpaper": "/home/nisargsc/.local/share/wallpapers/on-the-roof-above-passers-by.jpg",
+    "alpha": "100",
+    "special": {
+        "background": "#0e1214",
+        "foreground": "#cbcfd9",
+        "cursor": "#cbcfd9"
+    },
+    "colors": {
+        "color0": "#0e1214",
+        "color1": "#D8985E",
+        "color2": "#216790",
+        "color3": "#5B6A94",
+        "color4": "#5A61BC",
+        "color5": "#996B9C",
+        "color6": "#4EA1C1",
+        "color7": "#cbcfd9",
+        "color8": "#8e9097",
+        "color9": "#D8985E",
+        "color10": "#216790",
+        "color11": "#5B6A94",
+        "color12": "#5A61BC",
+        "color13": "#996B9C",
+        "color14": "#4EA1C1",
+        "color15": "#cbcfd9"
+    }
+}

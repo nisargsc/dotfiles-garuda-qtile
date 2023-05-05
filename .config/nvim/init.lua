@@ -165,6 +165,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
+
 -- Set lualine as statusline
 -- See `:help lualine.txt`
 require('lualine').setup {
@@ -178,7 +179,6 @@ require('lualine').setup {
 
 -- Set nvim-transparent
 require("transparent").setup({
-  enable = true, -- boolean: enable transparent
   extra_groups = { -- table/string: additional groups that should be cleared
     -- In particular, when you set it to 'all', that means all available groups
 
@@ -190,9 +190,10 @@ require("transparent").setup({
     "BufferLineSeparator",
     "BufferLineIndicatorSelected",
   },
-  exclude = {}, -- table: groups you don't want to clear
+  exclude_groups = {}, -- table: groups you don't want to clear
 })
-vim.keymap.set('n', '<leader>tr', ":TransparentToggle")
+-- vim.keymap.set('n', '<leader>tr', ":TransparentToggle")
+vim.keymap.set('n', '<leader>tr', function() vim.cmd("TransparentToggle") end)
 
 require('colorizer').setup()
 
@@ -377,7 +378,7 @@ local servers = {
   -- rust_analyzer = {},
   -- tsserver = {},
 
-  sumneko_lua = {
+  lua_ls = {
     Lua = {
       workspace = { checkThirdParty = false },
       telemetry = { enable = false },
@@ -391,6 +392,7 @@ require('neodev').setup()
 -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+
 
 -- Setup mason so it can manage external tooling
 require('mason').setup()

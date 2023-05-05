@@ -168,9 +168,6 @@ alias confqt="nvim ~/.config/qtile"
 alias shd="shutdown now"
 alias rbt="reboot"
 
-# work
-alias mn="cd ~/hdd/myne/repos"
-
 # git
 alias gis="git status"
 alias gil="git log --oneline --graph"
@@ -192,11 +189,7 @@ alias blk="ganache-cli --networkId 1337 --db ~/hdd/myne/ganache-db/"
 alias wrp="warp-cli connect"
 alias diwrp="warp-cli disconnect"
 
-# Keyboard Layout Change
-alias colmak="setxkbmap us -variant colemak_dh"
-alias qwerty="setxkbmap us"
-
 ## Run fastfetch if session is interactive
-# if status --is-interactive && type -q fastfetch
-#   fastfetch --load-config neofetch
-# end
+#if status --is-interactive && type -q fastfetch
+#  fastfetch 
+#end

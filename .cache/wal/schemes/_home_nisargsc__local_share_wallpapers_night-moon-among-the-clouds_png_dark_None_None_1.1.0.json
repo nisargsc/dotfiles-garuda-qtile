@@ -1,0 +1,27 @@
+{
+    "wallpaper": "/home/nisargsc/.local/share/wallpapers/night-moon-among-the-clouds.png",
+    "alpha": "100",
+    "special": {
+        "background": "#12181f",
+        "foreground": "#aeb7c6",
+        "cursor": "#aeb7c6"
+    },
+    "colors": {
+        "color0": "#12181f",
+        "color1": "#502F90",
+        "color2": "#3A4B87",
+        "color3": "#50498E",
+        "color4": "#6B5CA7",
+        "color5": "#8A68B7",
+        "color6": "#9C77C3",
+        "color7": "#aeb7c6",
+        "color8": "#79808a",
+        "color9": "#502F90",
+        "color10": "#3A4B87",
+        "color11": "#50498E",
+        "color12": "#6B5CA7",
+        "color13": "#8A68B7",
+        "color14": "#9C77C3",
+        "color15": "#aeb7c6"
+    }
+}

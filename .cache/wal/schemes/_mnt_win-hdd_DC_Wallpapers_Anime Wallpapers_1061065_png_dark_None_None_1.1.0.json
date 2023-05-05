@@ -1,0 +1,27 @@
+{
+    "wallpaper": "/mnt/win-hdd/DC/Wallpapers/Anime Wallpapers/1061065.png",
+    "alpha": "100",
+    "special": {
+        "background": "#0C0203",
+        "foreground": "#de999d",
+        "cursor": "#de999d"
+    },
+    "colors": {
+        "color0": "#0C0203",
+        "color1": "#742630",
+        "color2": "#702949",
+        "color3": "#9B212C",
+        "color4": "#8E2932",
+        "color5": "#9E3448",
+        "color6": "#AA4854",
+        "color7": "#de999d",
+        "color8": "#9b6b6d",
+        "color9": "#742630",
+        "color10": "#702949",
+        "color11": "#9B212C",
+        "color12": "#8E2932",
+        "color13": "#9E3448",
+        "color14": "#AA4854",
+        "color15": "#de999d"
+    }
+}

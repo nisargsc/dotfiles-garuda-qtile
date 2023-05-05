@@ -1,0 +1,27 @@
+{
+    "wallpaper": "/home/nisargsc/.local/share/wallpapers/the-universe-is-made-up-of-cats.jpg",
+    "alpha": "100",
+    "special": {
+        "background": "#0C0A13",
+        "foreground": "#a0d3eb",
+        "cursor": "#a0d3eb"
+    },
+    "colors": {
+        "color0": "#0C0A13",
+        "color1": "#99285E",
+        "color2": "#C13C43",
+        "color3": "#6F886C",
+        "color4": "#E5A370",
+        "color5": "#4531B5",
+        "color6": "#BA57A0",
+        "color7": "#a0d3eb",
+        "color8": "#7093a4",
+        "color9": "#99285E",
+        "color10": "#C13C43",
+        "color11": "#6F886C",
+        "color12": "#E5A370",
+        "color13": "#4531B5",
+        "color14": "#BA57A0",
+        "color15": "#a0d3eb"
+    }
+}

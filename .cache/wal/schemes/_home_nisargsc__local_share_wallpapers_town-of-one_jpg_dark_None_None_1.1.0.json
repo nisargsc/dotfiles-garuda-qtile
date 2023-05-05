@@ -1,0 +1,27 @@
+{
+    "wallpaper": "/home/nisargsc/.local/share/wallpapers/town-of-one.jpg",
+    "alpha": "100",
+    "special": {
+        "background": "#061019",
+        "foreground": "#dad8d0",
+        "cursor": "#dad8d0"
+    },
+    "colors": {
+        "color0": "#061019",
+        "color1": "#4F4C4C",
+        "color2": "#67615D",
+        "color3": "#8C6F60",
+        "color4": "#7F847A",
+        "color5": "#669091",
+        "color6": "#9CAAA1",
+        "color7": "#dad8d0",
+        "color8": "#989791",
+        "color9": "#4F4C4C",
+        "color10": "#67615D",
+        "color11": "#8C6F60",
+        "color12": "#7F847A",
+        "color13": "#669091",
+        "color14": "#9CAAA1",
+        "color15": "#dad8d0"
+    }
+}

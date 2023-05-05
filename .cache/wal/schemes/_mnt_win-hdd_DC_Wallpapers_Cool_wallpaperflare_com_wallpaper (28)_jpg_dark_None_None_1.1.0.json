@@ -1,0 +1,27 @@
+{
+    "wallpaper": "/mnt/win-hdd/DC/Wallpapers/Cool/wallpaperflare.com_wallpaper (28).jpg",
+    "alpha": "100",
+    "special": {
+        "background": "#050516",
+        "foreground": "#90cbed",
+        "cursor": "#90cbed"
+    },
+    "colors": {
+        "color0": "#050516",
+        "color1": "#BA1160",
+        "color2": "#15249A",
+        "color3": "#58249A",
+        "color4": "#1257DB",
+        "color5": "#3D45C7",
+        "color6": "#B437AB",
+        "color7": "#90cbed",
+        "color8": "#648ea5",
+        "color9": "#BA1160",
+        "color10": "#15249A",
+        "color11": "#58249A",
+        "color12": "#1257DB",
+        "color13": "#3D45C7",
+        "color14": "#B437AB",
+        "color15": "#90cbed"
+    }
+}

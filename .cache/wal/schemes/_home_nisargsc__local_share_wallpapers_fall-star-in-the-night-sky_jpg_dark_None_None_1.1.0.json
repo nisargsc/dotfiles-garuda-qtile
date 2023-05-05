@@ -1,0 +1,27 @@
+{
+    "wallpaper": "/home/nisargsc/.local/share/wallpapers/fall-star-in-the-night-sky.jpg",
+    "alpha": "100",
+    "special": {
+        "background": "#141212",
+        "foreground": "#98c6d6",
+        "cursor": "#98c6d6"
+    },
+    "colors": {
+        "color0": "#141212",
+        "color1": "#2B5A86",
+        "color2": "#2F6A92",
+        "color3": "#2D79A5",
+        "color4": "#50708B",
+        "color5": "#328DB3",
+        "color6": "#3B93B1",
+        "color7": "#98c6d6",
+        "color8": "#6a8a95",
+        "color9": "#2B5A86",
+        "color10": "#2F6A92",
+        "color11": "#2D79A5",
+        "color12": "#50708B",
+        "color13": "#328DB3",
+        "color14": "#3B93B1",
+        "color15": "#98c6d6"
+    }
+}

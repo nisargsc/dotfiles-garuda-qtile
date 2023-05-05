@@ -1,0 +1,27 @@
+{
+    "wallpaper": "/home/nisargsc/.local/share/wallpapers/night-city-of-the-near-future.jpg",
+    "alpha": "100",
+    "special": {
+        "background": "#130e15",
+        "foreground": "#b8cbc9",
+        "cursor": "#b8cbc9"
+    },
+    "colors": {
+        "color0": "#130e15",
+        "color1": "#B23657",
+        "color2": "#8F5A72",
+        "color3": "#696392",
+        "color4": "#4140AC",
+        "color5": "#946E8E",
+        "color6": "#DC5BA1",
+        "color7": "#b8cbc9",
+        "color8": "#808e8c",
+        "color9": "#B23657",
+        "color10": "#8F5A72",
+        "color11": "#696392",
+        "color12": "#4140AC",
+        "color13": "#946E8E",
+        "color14": "#DC5BA1",
+        "color15": "#b8cbc9"
+    }
+}

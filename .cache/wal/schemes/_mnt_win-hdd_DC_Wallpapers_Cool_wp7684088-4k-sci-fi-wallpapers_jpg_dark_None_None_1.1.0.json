@@ -1,0 +1,27 @@
+{
+    "wallpaper": "/mnt/win-hdd/DC/Wallpapers/Cool/wp7684088-4k-sci-fi-wallpapers.jpg",
+    "alpha": "100",
+    "special": {
+        "background": "#0A172F",
+        "foreground": "#c6c7c4",
+        "cursor": "#c6c7c4"
+    },
+    "colors": {
+        "color0": "#0A172F",
+        "color1": "#C1956D",
+        "color2": "#376488",
+        "color3": "#55748C",
+        "color4": "#857D81",
+        "color5": "#68909E",
+        "color6": "#74A7C0",
+        "color7": "#c6c7c4",
+        "color8": "#8a8b89",
+        "color9": "#C1956D",
+        "color10": "#376488",
+        "color11": "#55748C",
+        "color12": "#857D81",
+        "color13": "#68909E",
+        "color14": "#74A7C0",
+        "color15": "#c6c7c4"
+    }
+}
