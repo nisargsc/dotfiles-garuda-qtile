@@ -27,8 +27,9 @@
 
 import os
 import subprocess
+from typing import List
 from libqtile import layout, bar, hook, qtile, widget
-from libqtile.config import  Drag, Group, Key, Match, Screen 
+from libqtile.config import  Drag, DropDown, Group, Key, KeyChord, Match, ScratchPad, Screen 
 from libqtile.command import lazy
 #from qtile_extras import widget
 #from qtile_extras.widget.decorations import PowerLineDecoration
@@ -64,7 +65,9 @@ black="#000000"
 
 bg_transparent='#1b2b3400'
 bg_color="#383838"
+bg_color="#150A0E"
 bg_color2="#928374"
+bg_color2="#8A4153"
 shadow_color="#888888"
 #font_color="#d8dee9"
 font_color=white
@@ -102,7 +105,7 @@ def window_to_next_group(qtile):
 
 myTerm = "alacritty" # My terminal of choice
 
-keys = [
+keys:List[Key|KeyChord] = [
         # SUPER + FUNCTION KEYS
 
         Key([mod], "f", lazy.window.toggle_fullscreen()),
@@ -168,13 +171,13 @@ keys = [
 # MULTIMEDIA KEYS
 
 # INCREASE/DECREASE BRIGHTNESS
-    Key([], "XF86MonBrightnessUp", lazy.spawn("brightnessctl s +5%")),
-    Key([], "XF86MonBrightnessDown", lazy.spawn("brightnessctl s 5%- ")),
+    Key([], "XF86MonBrightnessUp", lazy.spawn(home+'/.config/qtile/scripts/brightness.sh inc')),
+    Key([], "XF86MonBrightnessDown", lazy.spawn(home+'/.config/qtile/scripts/brightness.sh dec')),
 
 # INCREASE/DECREASE/MUTE VOLUME
-    Key([], "XF86AudioMute", lazy.spawn("amixer -q set Master toggle")),
-    Key([], "XF86AudioLowerVolume", lazy.spawn("amixer -q set Master 5%-")),
-    Key([], "XF86AudioRaiseVolume", lazy.spawn("amixer -q set Master 5%+")),
+    Key([], "XF86AudioMute", lazy.spawn(home+'/.config/qtile/scripts/volume.sh mute')),
+    Key([], "XF86AudioLowerVolume", lazy.spawn(home+'/.config/qtile/scripts/volume.sh dec')),
+    Key([], "XF86AudioRaiseVolume", lazy.spawn(home+'/.config/qtile/scripts/volume.sh inc')),
 
     Key([], "XF86AudioPlay", lazy.spawn("playerctl play-pause")),
     Key([], "XF86AudioNext", lazy.spawn("playerctl next")),
@@ -322,11 +325,11 @@ group_names = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0",]
 #group_names = ["ampersand", "eacute", "quotedbl", "apostrophe", "parenleft", "section", "egrave", "exclam", "ccedilla", "agrave",]
 
 #group_labels = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0",]
-#group_labels = ["" for _ in range(len(group_names))]
-group_labels = ["" for _ in range(len(group_names))]
+group_labels = ["" for _ in range(len(group_names))]
+# group_labels = ["" for _ in range(len(group_names))]
 #group_labels = ["" for _ in range(len(group_names))]
-#group_labels = ["" for _ in range(len(group_names))]
-#group_labels = ["" for _ in range(len(group_names))]
+# group_labels = ["" for _ in range(len(group_names))]
+# group_labels = ["" for _ in range(len(group_names))]
 #group_labels = [
         #        "Term", #1
         #        "Term", #2
@@ -355,6 +358,7 @@ for i in range(len(group_names)):
 
     groups.append(group)
 
+
 for i in groups:
     keys.extend([
 
@@ -371,6 +375,32 @@ for i in groups:
         Key([mod, mod2], i.name, lazy.window.togroup(i.name) , lazy.group[i.name].toscreen()),
         ])
 
+# Add scratchpad and scratchpad keybindings
+dropdown_config = {
+        "x":0.15, 
+        "y":0.15, 
+        "width":0.7, 
+        "height":0.7,
+        "opacity":1,
+        "on_focus_lost_hide":True
+        }
+groups.append(
+        ScratchPad(
+            name="scratchpad", 
+            dropdowns=[
+                DropDown("term1", "alacritty", **dropdown_config),
+                DropDown("term2", "alacritty", **dropdown_config),
+                ],
+        ))
+keys.append(
+        KeyChord(
+            [mod], "s", 
+            [
+                Key([],"1", lazy.group['scratchpad'].dropdown_toggle('term1')),
+                Key([],"2", lazy.group['scratchpad'].dropdown_toggle('term2')),
+                Key([],"g", lazy.group['scratchpad'].toscreen()),
+                ]
+            ))
 
 def init_layout_theme():
     return {
@@ -440,25 +470,6 @@ def init_colors():
 
 colors = init_colors()
 
-# powerlineRightRound = {
-#         "decorations": [
-#             PowerLineDecoration(path="rounded_right")
-#             ]
-#         }
-#
-# powerlineLeftRound = {
-#         "decorations": [
-#             PowerLineDecoration(path="rounded_left")
-#             ]
-#         }
-#
-# powerline = {
-#             "decorations": [
-#                     PowerLineDecoration(path="arrow_right")
-#                 ]
-#         }
-
-
 # WIDGETS FOR THE BAR
 
 def init_widgets_defaults():
@@ -500,10 +511,13 @@ def init_widgets_list():
                 length=padding_spacer,
                 # **powerline,
                 ),
+            widget.Sep(
+                    background= primary_color,
+                    foreground= primary_color,
+                    ),
             widget.CurrentLayoutIcon(
                 custom_icon_paths = [os.path.expanduser("~/.config/qtile/icons")],
-                background = primary_color,
-                foreground = bg_color,
+                background = bg_color2,
                 padding = 0,
                 scale = 0.7,
                 ),
@@ -511,16 +525,21 @@ def init_widgets_list():
             widget.CurrentLayout(
                 font = bold_font,
                 fontsize = 12,
-                background = primary_color,
+                background = bg_color2,
                 foreground = bg_color,
                 # **powerline,
                 ),
+            widget.Sep(
+                    background= primary_color,
+                    foreground= primary_color,
+                    ),
             widget.Spacer(
                 #background=shadow_color,
                 length=padding_spacer,
                 # **powerline,
                 ),
             widget.TaskList(
+                background=bg_color,
                 font = normal_font,
                 highlight_method = 'block', # or block
                 max_title_width=150,
@@ -543,8 +562,16 @@ def init_widgets_list():
                     length=padding_spacer,
                     # **powerline,
                     ),
+            widget.Sep(
+                    background= "#453841",
+                    foreground= "#453841",
+                    # background= bg_color,
+                    # foreground= bg_color2,
+                    linewidth=1,
+                    ),
             widget.GroupBox(
-                    background= bg_color2,
+                    # background= bg_color2,
+                    background= primary_color,
                     foreground= font_color,
                     font=normal_font,
                     fontsize = 23,
@@ -561,8 +588,8 @@ def init_widgets_list():
                     highlight_color=shadow_color,
                     urgent_alert_method='line',
                     urgent_border=secondary_color,
-                    this_current_screen_border=primary_color,
-                    this_screen_border=primary_color,
+                    this_current_screen_border=bg_color2,
+                    this_screen_border=bg_color2,
                     other_current_screen_border=shadow_color,
                     other_screen_border=shadow_color,
                     disable_drag=True,
@@ -570,43 +597,29 @@ def init_widgets_list():
                     #visible_groups=['1','2','9','0'],
                     # **powerline,
                     ),
+            widget.Sep(
+                    background= "#453841",
+                    foreground= "#453841",
+                    # background= bg_color,
+                    # foreground= bg_color2,
+                    linewidth=1,
+                    ),
             widget.Spacer(
                     #background=shadow_color,
+                    background= bg_color2,
                     length=padding_spacer,
                     # **powerline,
                     ),
-
-            #widget.Net(
-                    #        #interface="enp7s0",
-                    #        font=bold_font,
-                    #        #format="{down:.1f}{down_suffix} ↓↑ {up:.1f}{up_suffix}",
-                    #        update_interval = 1,
-                    #        fontsize = 12,
-                    #        background = bg_color,
-                    #        foreground = font_color,
-                    #        mouse_callbacks = {'Button1': lambda : qtile.cmd_spawn(myTerm + ' -e htop')},
-                    #        #**powerline,
-                    #        ),
-
-            #widget.Spacer(
-                    #        background=bg_color,
-                    #        length=5,
-                    #        ),
-
-            #widget.Sep(
-                    #        background= bg_color,
-                    #        foreground= font_color,
-                    #        linewidth=2,
-                    #        #    **powerline,
-                    #        ),
 
             widget.CPU(
                     font=bold_font,
                     format = '{freq_current}GHz {load_percent}%',
                     update_interval = 1,
                     fontsize = 12,
-                    background = bg_color,
-                    foreground = bg_color2,
+                    background= bg_color2,
+                    foreground= bg_color,
+                    # background= bg_color,
+                    # foreground= bg_color2,
                     mouse_callbacks = {'Button1': lambda : qtile.cmd_spawn(myTerm + ' -e htop')},
                     #**powerline,
                     ),
@@ -615,14 +628,18 @@ def init_widgets_list():
                     fmt = '󰻠 ',
                     font = bold_font,
                     fontsize = 28,
-                    background = bg_color,
-                    foreground = bg_color2,
+                    background= bg_color2,
+                    foreground= bg_color,
+                    # background= bg_color,
+                    # foreground= bg_color2,
                     mouse_callbacks = {'Button1': lambda : qtile.cmd_spawn(myTerm + ' -e htop')},
                     ),
 
             widget.Sep(
-                    background= bg_color,
-                    foreground= bg_color2,
+                    background= bg_color2,
+                    foreground= bg_color,
+                    # background= bg_color,
+                    # foreground= bg_color2,
                     linewidth=2,
                     #    **powerline,
                     ),
@@ -633,40 +650,60 @@ def init_widgets_list():
                     update_interval = 1,
                     fontsize = 12,
                     measure_mem = 'G',
-                    background = bg_color,
-                    foreground = bg_color2,
+                    background= bg_color2,
+                    foreground= bg_color,
+                    # background= bg_color,
+                    # foreground= bg_color2,
                     mouse_callbacks = {'Button1': lambda : qtile.cmd_spawn(myTerm + ' -e htop')},
                     ),
             widget.TextBox(
                     fmt = '󰍛',
                     font = bold_font,
                     fontsize = 28,
-                    background = bg_color,
-                    foreground = bg_color2,
+                    background= bg_color2,
+                    foreground= bg_color,
+                    # background= bg_color,
+                    # foreground= bg_color2,
                     mouse_callbacks = {'Button1': lambda : qtile.cmd_spawn(myTerm + ' -e htop')},
                     #**powerline,
                     ),
             widget.Sep(
-                    background= bg_color,
-                    foreground= bg_color2,
+                    background= bg_color2,
+                    foreground= bg_color,
+                    # background= bg_color,
+                    # foreground= bg_color2,
                     linewidth=2,
                     ),
             widget.TextBox(
                     fmt = '󱊣',
                     font = bold_font,
                     fontsize = 24,
-                    background = bg_color,
-                    foreground = bg_color2,
+                    background= bg_color2,
+                    foreground= bg_color,
+                    # background= bg_color,
+                    # foreground= bg_color2,
+                    mouse_callbacks = {'Button1': lambda : qtile.cmd_spawn(myTerm + ' -e battop')},
                     ),
             widget.Battery(
                     font=bold_font,
-                    background= bg_color,
-                    foreground= bg_color2,
+                    background= bg_color2,
+                    foreground= bg_color,
+                    # background= bg_color,
+                    # foreground= bg_color2,
                     fontsize = 14,
                     format="{percent:2.0%}",
+                    mouse_callbacks = {'Button1': lambda : qtile.cmd_spawn(myTerm + ' -e battop')},
+                    ),
+            widget.Sep(
+                    background= bg_color2,
+                    foreground= bg_color,
+                    # background= bg_color,
+                    # foreground= bg_color2,
+                    linewidth=2,
                     ),
             widget.Spacer(
                     #background=shadow_color,
+                    background= bg_color2,
                     length=padding_spacer,
                     # **powerline,
                     ),
@@ -674,39 +711,49 @@ def init_widgets_list():
 
             widget.Clock(
                     font=bold_font,
-                    background = primary_color,
+                    # background = primary_color,
+                    background= bg_color2,
                     foreground = font_color,
-                    fontsize = 18,
+                    fontsize = 20,
                     format="%I:%M %p",
                     ),
             widget.Clock(
                     font=bold_font,
-                    background = primary_color,
+                    # background = primary_color,
+                    background= bg_color2,
                     foreground = bg_color,
                     fontsize = 14,
                     format="%a %d-%m-%y",
                     # **powerline,
                     #**powerline,
                     ),
+            widget.Sep(
+                    background= bg_color2,
+                    foreground= bg_color,
+                    # background= bg_color,
+                    # foreground= bg_color2,
+                    linewidth=2,
+                    ),
 
+            widget.Spacer(
+                    #background=shadow_color,
+                    background= bg_color2,
+                    length=padding_spacer,
+                    # **powerline,
+                    ),
             widget.Systray(
+                    background= bg_color2,
+                    foreground= font_color,
                     padding = 2,
                     #**powerline,
                     ),
 
             widget.Spacer(
+                    background= bg_color2,
+                    foreground= font_color,
                     length=padding_spacer,
                     ),
 
-            # widget.TextBox(
-                    #         fmt= " ",
-                    #         mouse_callbacks = {'Button1': lambda : qtile.cmd_spawn(home + '/.config/qtile/scripts/rofi-power-menu.sh')},
-                    #         background= bg_color,
-                    #         foreground= font_color,
-                    #         font=normal_font,
-                    #         fontsize = 16,
-                    #         # **powerlineLeftRound,
-                    #         ),
             ]
     return widgets_list
 
@@ -714,10 +761,10 @@ def init_widgets_list():
 def init_screens():
     return [
             Screen(
-                top=bar.Bar(
+                bottom=bar.Bar(
                     widgets=init_widgets_list(), 
-                    size=30,
-                    #margin=[5,20,0,20],
+                    size=28,
+                    margin=[0,20,0,20],
                     opacity=1,
                     background= bg_color,
                     #    border_color = shadow_color,
@@ -725,10 +772,10 @@ def init_screens():
                     ),
                 ),
             Screen(
-                top=bar.Bar(
-                    widgets=init_widgets_list()[:-5]+init_widgets_list()[-4:],
-                    size=30,
-                    margin=[5,20,0,20],
+                bottom=bar.Bar(
+                    widgets=init_widgets_list()[:-2],
+                    size=28,
+                    margin=[0,20,0,20],
                     opacity=1,
                     background= bg_color,
                     #border_color = shadow_color,

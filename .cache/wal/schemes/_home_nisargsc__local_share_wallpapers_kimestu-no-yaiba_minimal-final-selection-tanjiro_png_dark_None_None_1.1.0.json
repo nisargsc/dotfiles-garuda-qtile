@@ -1,0 +1,27 @@
+{
+    "wallpaper": "/home/nisargsc/.local/share/wallpapers/kimestu-no-yaiba/minimal-final-selection-tanjiro.png",
+    "alpha": "100",
+    "special": {
+        "background": "#0c0608",
+        "foreground": "#e2e3ea",
+        "cursor": "#e2e3ea"
+    },
+    "colors": {
+        "color0": "#0c0608",
+        "color1": "#3B9ACF",
+        "color2": "#3DA0D7",
+        "color3": "#4494C3",
+        "color4": "#D4989F",
+        "color5": "#C0B1C2",
+        "color6": "#F3CFC2",
+        "color7": "#e2e3ea",
+        "color8": "#9e9ea3",
+        "color9": "#3B9ACF",
+        "color10": "#3DA0D7",
+        "color11": "#4494C3",
+        "color12": "#D4989F",
+        "color13": "#C0B1C2",
+        "color14": "#F3CFC2",
+        "color15": "#e2e3ea"
+    }
+}

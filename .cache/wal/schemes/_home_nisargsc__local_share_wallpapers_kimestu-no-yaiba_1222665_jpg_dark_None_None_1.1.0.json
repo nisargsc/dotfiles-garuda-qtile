@@ -1,0 +1,27 @@
+{
+    "wallpaper": "/home/nisargsc/.local/share/wallpapers/kimestu-no-yaiba/1222665.jpg",
+    "alpha": "100",
+    "special": {
+        "background": "#0f0709",
+        "foreground": "#e5e6e4",
+        "cursor": "#e5e6e4"
+    },
+    "colors": {
+        "color0": "#0f0709",
+        "color1": "#6EB3CA",
+        "color2": "#8A8492",
+        "color3": "#ADABA7",
+        "color4": "#CBAB9C",
+        "color5": "#F7D7B1",
+        "color6": "#F6DDBB",
+        "color7": "#e5e6e4",
+        "color8": "#a0a19f",
+        "color9": "#6EB3CA",
+        "color10": "#8A8492",
+        "color11": "#ADABA7",
+        "color12": "#CBAB9C",
+        "color13": "#F7D7B1",
+        "color14": "#F6DDBB",
+        "color15": "#e5e6e4"
+    }
+}
