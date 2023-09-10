@@ -1,0 +1,50 @@
+#!/bin/bash
+CURRENT_LAYOUT="us"
+setxkbmap us
+printf "current layout: $CURRENT_LAYOUT \n"
+
+t1=1
+if [ $1 ];then
+	t1=$1
+fi
+printf "Sleeping... Loop will start in $t1 sec... \n"
+sleep $t1
+
+t2=1
+if [ $2 ];then
+	t2=$2
+fi
+
+ittr=4
+if [ $3 ];then
+	ittr=$3
+fi
+printf "Starting the loop for $ittr itterations... \n"
+
+for ((i=1; i<=$ittr; i++))
+do
+	case $CURRENT_LAYOUT in
+
+		"us")
+			CURRENT_LAYOUT='colemak_dh'
+			printf "$i: Layout changing to ($CURRENT_LAYOUT) \n"
+
+			setxkbmap us -variant colemak_dh
+			;;
+
+		"colemak_dh")
+			CURRENT_LAYOUT='us'
+			printf "$i: Layout changing to ($CURRENT_LAYOUT) \n"
+
+			setxkbmap us
+			;;
+	esac
+
+	if [ $i != $ittr ];then
+		printf "Sleeping for $t2 sec... \n\n"
+		sleep $t2
+	else
+		printf "End of the loop... \n"
+	fi
+done
+

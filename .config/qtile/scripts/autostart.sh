@@ -15,19 +15,13 @@ run nm-applet &
 run pamac-tray &
 numlockx on &
 blueman-applet &
-#flameshot &
 #picom --config $HOME/.config/picom/picom.conf &
 picom --config .config/picom/picom-jonaburg.conf --experimental-backends &
-#/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
-dunst &
-# feh --randomize --bg-fill /usr/share/wallpapers/garuda-wallpapers/*
+# dunst &
+
 #starting user applications at boot time
 run volumeicon &
-#run discord &
-#nitrogen --random --set-zoom-fill &
-$HOME/.screenlayout/external-above.sh &
-#nitrogen --restore &
-wal -Rq &
+nitrogen --restore &
 run /usr/lib/kdeconnectd &
 #run caffeine -a &
 #run vivaldi-stable &

@@ -193,3 +193,5 @@ alias diwrp="warp-cli disconnect"
 #if status --is-interactive && type -q fastfetch
 #  fastfetch 
 #end
+
+export PATH="$PATH:/home/nisargsc/.foundry/bin"

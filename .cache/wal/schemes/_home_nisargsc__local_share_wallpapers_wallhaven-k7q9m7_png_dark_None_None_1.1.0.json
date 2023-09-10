@@ -1,0 +1,27 @@
+{
+    "wallpaper": "/home/nisargsc/.local/share/wallpapers/wallhaven-k7q9m7.png",
+    "alpha": "100",
+    "special": {
+        "background": "#0a0c0f",
+        "foreground": "#9fc0c7",
+        "cursor": "#9fc0c7"
+    },
+    "colors": {
+        "color0": "#0a0c0f",
+        "color1": "#2C3947",
+        "color2": "#2E4B50",
+        "color3": "#2B5B63",
+        "color4": "#4A6266",
+        "color5": "#3D708E",
+        "color6": "#779590",
+        "color7": "#9fc0c7",
+        "color8": "#6f868b",
+        "color9": "#2C3947",
+        "color10": "#2E4B50",
+        "color11": "#2B5B63",
+        "color12": "#4A6266",
+        "color13": "#3D708E",
+        "color14": "#779590",
+        "color15": "#9fc0c7"
+    }
+}

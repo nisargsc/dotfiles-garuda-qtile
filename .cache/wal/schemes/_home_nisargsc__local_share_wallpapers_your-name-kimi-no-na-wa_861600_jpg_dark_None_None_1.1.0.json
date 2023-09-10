@@ -1,0 +1,27 @@
+{
+    "wallpaper": "/home/nisargsc/.local/share/wallpapers/your-name-kimi-no-na-wa/861600.jpg",
+    "alpha": "100",
+    "special": {
+        "background": "#252225",
+        "foreground": "#c8e0e6",
+        "cursor": "#c8e0e6"
+    },
+    "colors": {
+        "color0": "#252225",
+        "color1": "#5FA0C1",
+        "color2": "#6FB0CC",
+        "color3": "#7DC1D7",
+        "color4": "#98A5A7",
+        "color5": "#C1C5AC",
+        "color6": "#9AB8C8",
+        "color7": "#c8e0e6",
+        "color8": "#8c9ca1",
+        "color9": "#5FA0C1",
+        "color10": "#6FB0CC",
+        "color11": "#7DC1D7",
+        "color12": "#98A5A7",
+        "color13": "#C1C5AC",
+        "color14": "#9AB8C8",
+        "color15": "#c8e0e6"
+    }
+}
